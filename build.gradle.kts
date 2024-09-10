@@ -34,6 +34,7 @@ dependencies {
     testImplementation("org.springframework.ai:spring-ai-spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:mongodb")
+    testImplementation("org.mockito:mockito-core:2.1.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
