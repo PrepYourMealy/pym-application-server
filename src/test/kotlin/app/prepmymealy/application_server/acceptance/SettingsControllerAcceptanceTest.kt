@@ -65,8 +65,15 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
         assertThat(response.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
         val expectedJson = "{" +
                 "\"code\":404," +
-                "\"message\":\"Settings not found for id: $someId\"" +
+                "\"message\":\"Settings not found for id: $someId\"," +
+                "\"errors\":null" +
         "}"
         assertThat(response.body).isEqualTo(expectedJson)
+    }
+
+
+    @Test
+    fun `should create settings and user data on post`() {
+
     }
 }
