@@ -1,19 +1,13 @@
 package app.prepmymealy.application.service
 
+import app.prepmymealy.application.configuration.SettingsConfigurationProperties
 import app.prepmymealy.application.domain.Settings
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.util.Optional
 
 @Service
 class SettingsValidationService(
-    @Value("\${settings.validation.max-string-size}") private val maxStringSize: Int,
-    @Value("\${settings.validation.max-favorite-meals-length}") private val maxFavoriteMeals: Int,
-    @Value("\${settings.validation.max-liked-ingredients-length}") private val maxLikedIngredients: Int,
-    @Value("\${settings.validation.max-disliked-ingredients-length}") private val maxDislikedIngredients: Int,
-    @Value("\${settings.validation.max-allergies-length}") private val maxAllergies: Int,
-    @Value("\${settings.validation.max-dietary-preferences}") private val maxDietaryPreferences: Int,
-    @Value("\${settings.validation.max-kitchen-equipment}") private val maxKitchenEquipment: Int,
+    private val settingLimits: SettingsConfigurationProperties,
 ) {
     companion object {
         private const val MAX_STRING_SIZE_EXCEEDED = "The given string exceeds the limit."
@@ -27,47 +21,96 @@ class SettingsValidationService(
 
     fun validateSettings(settings: Settings): Optional<Map<String, String>> {
         val errorMap = mutableMapOf<String, String>()
-        if (settings.favoriteMeals?.size!! > maxFavoriteMeals) {
-            errorMap["favoriteMeals"] = MAX_FAVORITE_MEALS_EXCEEDED
-        }
-        if (settings.likedIngredients?.size!! > maxLikedIngredients) {
-            errorMap["likedIngredients"] = MAX_LIKED_INGREDIENTS_EXCEEDED
-        }
-        if (settings.dislikedIngredients?.size!! > maxDislikedIngredients) {
-            errorMap["dislikedIngredients"] = MAX_DISLIKED_INGREDIENTS_EXCEEDED
-        }
-        if (settings.allergies?.size!! > maxAllergies) {
-            errorMap["allergies"] = MAX_ALLERGIES_EXCEEDED
-        }
-        if (settings.dietaryPreferences?.size!! > maxDietaryPreferences) {
-            errorMap["dietaryPreferences"] = MAX_DIETARY_PREFERENCES_EXCEEDED
-        }
-        if (settings.kitchenEquipment?.size!! > maxKitchenEquipment) {
-            errorMap["kitchenEquipment"] = MAX_KITCHEN_EQUIPMENT_EXCEEDED
-        }
+
+        // Validate numeric properties with limits
+        validateNumeric(settings.people, settingLimits.minPeople, settingLimits.maxPeople, "people", errorMap)
+        validateNumeric(settings.budget, settingLimits.minBudget, settingLimits.maxBudget, "budget", errorMap)
+        validateNumeric(settings.mealsPerDay, settingLimits.minMealsPerDay, settingLimits.maxMealsPerDay, "mealsPerDay", errorMap)
+
+        // Validate collection lengths
+        validateCollectionSize(
+            settings.favoriteMeals,
+            settingLimits.maxFavoriteMealsLength,
+            "favoriteMeals",
+            MAX_FAVORITE_MEALS_EXCEEDED,
+            errorMap,
+        )
+        validateCollectionSize(
+            settings.likedIngredients,
+            settingLimits.maxLikedIngredientsLength,
+            "likedIngredients",
+            MAX_LIKED_INGREDIENTS_EXCEEDED,
+            errorMap,
+        )
+        validateCollectionSize(
+            settings.dislikedIngredients,
+            settingLimits.maxDislikedIngredientsLength,
+            "dislikedIngredients",
+            MAX_DISLIKED_INGREDIENTS_EXCEEDED,
+            errorMap,
+        )
+        validateCollectionSize(settings.allergies, settingLimits.maxAllergiesLength, "allergies", MAX_ALLERGIES_EXCEEDED, errorMap)
+        validateCollectionSize(
+            settings.dietaryPreferences,
+            settingLimits.maxDietaryPreferencesLength,
+            "dietaryPreferences",
+            MAX_DIETARY_PREFERENCES_EXCEEDED,
+            errorMap,
+        )
+        validateCollectionSize(
+            settings.kitchenEquipment,
+            settingLimits.maxLikedIngredientsLength,
+            "kitchenEquipment",
+            MAX_KITCHEN_EQUIPMENT_EXCEEDED,
+            errorMap,
+        )
+
+        // Validate string lengths within collections
         validateStringLength(settings.favoriteMeals, "favoriteMeals", errorMap)
         validateStringLength(settings.likedIngredients, "likedIngredients", errorMap)
         validateStringLength(settings.dislikedIngredients, "dislikedIngredients", errorMap)
         validateStringLength(settings.allergies, "allergies", errorMap)
         validateStringLength(settings.dietaryPreferences, "dietaryPreferences", errorMap)
         validateStringLength(settings.kitchenEquipment, "kitchenEquipment", errorMap)
-        if (errorMap.isEmpty()) {
-            return Optional.empty()
+
+        return if (errorMap.isEmpty()) Optional.empty() else Optional.of(errorMap)
+    }
+
+    private fun validateNumeric(
+        value: Long?,
+        min: Int,
+        max: Int,
+        field: String,
+        errorMap: MutableMap<String, String>,
+    ) {
+        value?.let {
+            when {
+                it < min -> errorMap[field] = "$field is below the minimum."
+                it > max -> errorMap[field] = "$field has exceeded the maximum."
+            }
         }
-        return Optional.of(errorMap)
+    }
+
+    private fun validateCollectionSize(
+        collection: List<*>?,
+        maxSize: Int,
+        field: String,
+        errorMessage: String,
+        errorMap: MutableMap<String, String>,
+    ) {
+        if ((collection?.size ?: 0) > maxSize) {
+            errorMap[field] = errorMessage
+        }
     }
 
     private fun validateStringLength(
         strings: List<String>?,
-        name: String,
+        field: String,
         errorMap: MutableMap<String, String>,
     ) {
-        if (strings.isNullOrEmpty()) {
-            return
-        }
-        for (i in strings.indices) {
-            if (strings[i].length > maxStringSize) {
-                errorMap["$name[$i]"] = MAX_STRING_SIZE_EXCEEDED
+        strings?.forEachIndexed { index, value ->
+            if (value.length > settingLimits.maxStringSize) {
+                errorMap["$field[$index]"] = MAX_STRING_SIZE_EXCEEDED
             }
         }
     }

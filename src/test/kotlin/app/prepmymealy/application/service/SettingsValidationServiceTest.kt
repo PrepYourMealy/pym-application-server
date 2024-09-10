@@ -1,20 +1,29 @@
 package app.prepmymealy.application.service
 
+import app.prepmymealy.application.configuration.SettingsConfigurationProperties
 import app.prepmymealy.application.domain.Settings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class SettingsValidationServiceTest {
-    private val settingsValidationService =
-        SettingsValidationService(
+    private val settingLimits =
+        SettingsConfigurationProperties(
             maxStringSize = 10,
-            maxDietaryPreferences = 3,
-            maxAllergies = 3,
-            maxFavoriteMeals = 3,
-            maxKitchenEquipment = 3,
-            maxLikedIngredients = 3,
-            maxDislikedIngredients = 3,
+            maxDietaryPreferencesLength = 3,
+            maxAllergiesLength = 3,
+            maxFavoriteMealsLength = 3,
+            maxKitchenEquipmentLength = 3,
+            maxLikedIngredientsLength = 3,
+            maxDislikedIngredientsLength = 3,
+            maxBudget = 200,
+            minBudget = 30,
+            maxPeople = 10,
+            minPeople = 1,
+            maxMealsPerDay = 3,
+            minMealsPerDay = 1,
         )
+    private val settingsValidationService =
+        SettingsValidationService(settingLimits)
 
     @Test
     fun `should invalidate too long string`() {
@@ -207,5 +216,161 @@ class SettingsValidationServiceTest {
         assertThat(result).isPresent
         assertThat(result.get().size).isEqualTo(1)
         assertThat(result.get()).containsEntry("kitchenEquipment", "Kitchen exceeds the limit.")
+    }
+
+    @Test
+    fun `should invalidate when min people is not met`() {
+        // given
+        val settings =
+            Settings(
+                id = "id",
+                budget = 40L,
+                favoriteMeals = listOf("Meal1"),
+                likedIngredients = listOf("Ingre"),
+                dislikedIngredients = listOf("Ingre"),
+                allergies = listOf("Allergy1"),
+                dietaryPreferences = listOf("Dietary"),
+                kitchenEquipment = listOf("Kitchen"),
+                includeDiscounts = true,
+                people = 0,
+                mealsPerDay = 2,
+            )
+        // when
+        val result = settingsValidationService.validateSettings(settings)
+
+        // then
+        assertThat(result).isPresent
+        assertThat(result.get().size).isEqualTo(1)
+        assertThat(result.get()).containsEntry("people", "people is below the minimum.")
+    }
+
+    @Test
+    fun `should invalidate when max people is exceeded`() {
+        // given
+        val settings =
+            Settings(
+                id = "id",
+                budget = 40L,
+                favoriteMeals = listOf("Meal1"),
+                likedIngredients = listOf("Ingre"),
+                dislikedIngredients = listOf("Ingre"),
+                allergies = listOf("Allergy1"),
+                dietaryPreferences = listOf("Dietary"),
+                kitchenEquipment = listOf("Kitchen"),
+                includeDiscounts = true,
+                people = 11,
+                mealsPerDay = 2,
+            )
+        // when
+        val result = settingsValidationService.validateSettings(settings)
+
+        // then
+        assertThat(result).isPresent
+        assertThat(result.get().size).isEqualTo(1)
+        assertThat(result.get()).containsEntry("people", "people has exceeded the maximum.")
+    }
+
+    @Test
+    fun `should invalidate when min budget is not met`() {
+        // given
+        val settings =
+            Settings(
+                id = "id",
+                budget = 29L,
+                favoriteMeals = listOf("Meal1"),
+                likedIngredients = listOf("Ingre"),
+                dislikedIngredients = listOf("Ingre"),
+                allergies = listOf("Allergy1"),
+                dietaryPreferences = listOf("Dietary"),
+                kitchenEquipment = listOf("Kitchen"),
+                includeDiscounts = true,
+                people = 2,
+                mealsPerDay = 2,
+            )
+        // when
+        val result = settingsValidationService.validateSettings(settings)
+
+        // then
+        assertThat(result).isPresent
+        assertThat(result.get().size).isEqualTo(1)
+        assertThat(result.get()).containsEntry("budget", "budget is below the minimum.")
+    }
+
+    @Test
+    fun `should invalidate when max budget is exceeded`() {
+        // given
+        val settings =
+            Settings(
+                id = "id",
+                budget = 201L,
+                favoriteMeals = listOf("Meal1"),
+                likedIngredients = listOf("Ingre"),
+                dislikedIngredients = listOf("Ingre"),
+                allergies = listOf("Allergy1"),
+                dietaryPreferences = listOf("Dietary"),
+                kitchenEquipment = listOf("Kitchen"),
+                includeDiscounts = true,
+                people = 2,
+                mealsPerDay = 2,
+            )
+        // when
+        val result = settingsValidationService.validateSettings(settings)
+
+        // then
+        assertThat(result).isPresent
+        assertThat(result.get().size).isEqualTo(1)
+        assertThat(result.get()).containsEntry("budget", "budget has exceeded the maximum.")
+    }
+
+    @Test
+    fun `should invalidate when min meals per day is not met`() {
+        // given
+        val settings =
+            Settings(
+                id = "id",
+                budget = 40L,
+                favoriteMeals = listOf("Meal1"),
+                likedIngredients = listOf("Ingre"),
+                dislikedIngredients = listOf("Ingre"),
+                allergies = listOf("Allergy1"),
+                dietaryPreferences = listOf("Dietary"),
+                kitchenEquipment = listOf("Kitchen"),
+                includeDiscounts = true,
+                people = 2,
+                mealsPerDay = 0,
+            )
+        // when
+        val result = settingsValidationService.validateSettings(settings)
+
+        // then
+        assertThat(result).isPresent
+        assertThat(result.get().size).isEqualTo(1)
+        assertThat(result.get()).containsEntry("mealsPerDay", "mealsPerDay is below the minimum.")
+    }
+
+    @Test
+    fun `should invalidate when max meals per day is exceeded`() {
+        // given
+        val settings =
+            Settings(
+                id = "id",
+                budget = 40L,
+                favoriteMeals = listOf("Meal1"),
+                likedIngredients = listOf("Ingre"),
+                dislikedIngredients = listOf("Ingre"),
+                allergies = listOf("Allergy1"),
+                dietaryPreferences = listOf("Dietary"),
+                kitchenEquipment = listOf("Kitchen"),
+                includeDiscounts = true,
+                people = 2,
+                mealsPerDay = 4,
+            )
+        // when
+        val result = settingsValidationService.validateSettings(settings)
+
+        // then
+        assertThat(result).isPresent
+        assertThat(result.get().size).isEqualTo(1)
+        assertThat(result.get()).containsEntry("mealsPerDay", "mealsPerDay has exceeded the maximum.")
     }
 }
