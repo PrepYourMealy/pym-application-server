@@ -1,3 +1,3 @@
 package app.prepmymealy.application_server.domain
 
-data class UserStats(val weeklyRegenerateRequest: Int)
+data class UserStats(val weeklyRegenerateRequest: Int? = null)

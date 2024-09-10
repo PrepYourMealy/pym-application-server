@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class User(
     @Id
     val id: String,
-    val stats: UserStats,
-    val limits: UserLimits
+    val stats: UserStats? = null,
+    val limits: UserLimits? = null
 )
