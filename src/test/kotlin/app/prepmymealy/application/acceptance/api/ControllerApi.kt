@@ -1,6 +1,7 @@
 package app.prepmymealy.application.acceptance.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
 import org.springframework.http.client.ClientHttpResponse
@@ -20,6 +21,9 @@ class ControllerApi {
         }
     }
 
+    @Autowired
+    private lateinit var objectMapper: ObjectMapper
+
     companion object {
         private val REST_TEMPLATE: RestTemplate = RestTemplate()
     }
@@ -27,9 +31,19 @@ class ControllerApi {
     @Value("\${base.url}")
     private lateinit var baseUrl: String
 
+    fun getDiscounts(): ResponseEntity<String> {
+        val url = "$baseUrl/discounts"
+        return getResponseEntity(url)
+    }
+
+    fun postDiscounts(discounts: List<Any>): ResponseEntity<String> {
+        val url = "$baseUrl/discounts"
+        return postResponseEntity(url, discounts)
+    }
+
     fun getSettingsById(id: String): ResponseEntity<String> {
         val url = "$baseUrl/settings/$id"
-        return getResponseEntity(url, MediaType.APPLICATION_JSON)
+        return getResponseEntity(url)
     }
 
     fun putSettings(
@@ -37,27 +51,23 @@ class ControllerApi {
         body: Any,
     ): ResponseEntity<String> {
         val url = "$baseUrl/settings/$id"
-        return putResponseEntity(url, MediaType.APPLICATION_JSON, body)
+        return putResponseEntity(url, body)
     }
 
     fun postSettings(body: Any): ResponseEntity<String> {
         val url = "$baseUrl/settings"
-        return postResponseEntity(url, MediaType.APPLICATION_JSON, body)
+        return postResponseEntity(url, body)
     }
 
-    private fun getResponseEntity(
-        url: String,
-        mediaType: MediaType,
-    ): ResponseEntity<String> {
+    private fun getResponseEntity(url: String): ResponseEntity<String> {
         REST_TEMPLATE.errorHandler = CustomResponseErrorHandler()
         val headers = HttpHeaders()
-        headers.accept = singletonList(mediaType)
+        headers.accept = singletonList(MediaType.APPLICATION_JSON)
         return REST_TEMPLATE.exchange(url, HttpMethod.GET, HttpEntity<MediaType>(headers), String::class.java)
     }
 
     private fun putResponseEntity(
         url: String,
-        mediaType: MediaType,
         requestBody: Any,
     ): ResponseEntity<String> {
         REST_TEMPLATE.errorHandler = CustomResponseErrorHandler()
@@ -65,8 +75,8 @@ class ControllerApi {
         // Initialize headers
         val headers =
             HttpHeaders().apply {
-                contentType = mediaType // Set Content-Type to application/json or any other mediaType
-                accept = listOf(mediaType)
+                contentType = MediaType.APPLICATION_JSON // Set Content-Type to application/json or any other mediaType
+                accept = listOf(MediaType.APPLICATION_JSON)
             }
 
         // Convert the request body object to JSON
@@ -87,18 +97,16 @@ class ControllerApi {
 
     private fun postResponseEntity(
         url: String,
-        mediaType: MediaType,
         requestBody: Any,
     ): ResponseEntity<String> {
         REST_TEMPLATE.errorHandler = CustomResponseErrorHandler()
 
         val headers =
             HttpHeaders().apply {
-                contentType = mediaType
-                accept = listOf(mediaType)
+                contentType = MediaType.APPLICATION_JSON
+                accept = listOf(MediaType.APPLICATION_JSON)
             }
 
-        val objectMapper = ObjectMapper()
         val jsonBody = objectMapper.writeValueAsString(requestBody)
 
         val httpEntity = HttpEntity(jsonBody, headers)

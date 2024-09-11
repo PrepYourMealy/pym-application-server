@@ -78,8 +78,7 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
         val expectedJson =
             "{" +
                 "\"code\":404," +
-                "\"message\":\"Settings not found for id: $someId\"," +
-                "\"errors\":null" +
+                "\"message\":\"Settings not found for id: $someId\"" +
                 "}"
         assertThat(response.body).isEqualTo(expectedJson)
     }
