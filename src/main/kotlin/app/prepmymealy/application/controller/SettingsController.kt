@@ -19,13 +19,17 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.Objects
 
 @RestController
-@RequestMapping("/settings")
+@RequestMapping(SettingsController.SETTINGS_PATH)
 class SettingsController(
     private val settingsService: SettingsService,
     private val converter: SettingsToSettingsRepresentationConverter,
     private val settingsUpdateService: SettingsUpdateService,
     private val validationService: SettingsValidationService,
 ) {
+    companion object {
+        const val SETTINGS_PATH = "/settings"
+    }
+
     @GetMapping("/{id}")
     fun getSettingsForId(
         @PathVariable("id") id: String,
