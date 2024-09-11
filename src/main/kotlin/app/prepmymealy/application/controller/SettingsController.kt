@@ -1,7 +1,7 @@
 package app.prepmymealy.application.controller
 
 import app.prepmymealy.application.converter.SettingsToSettingsRepresentationConverter
-import app.prepmymealy.application.domain.Settings
+import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.representation.ApiErrorRepresentation
 import app.prepmymealy.application.service.SettingsService
 import app.prepmymealy.application.service.SettingsUpdateService

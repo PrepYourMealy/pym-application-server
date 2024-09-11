@@ -1,7 +1,7 @@
 package app.prepmymealy.application.acceptance
 
 import app.prepmymealy.application.acceptance.api.ControllerApi
-import app.prepmymealy.application.domain.Discount
+import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.repository.DiscountRepository
 import app.prepmymealy.application.testsupport.AbstractSpringTest
 import org.assertj.core.api.Assertions.assertThat
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 
-class DiscountControllerAcceptanceTest : AbstractSpringTest() {
+class DiscountControllerAcceptanceOutputDeterminationService : AbstractSpringTest() {
     @Autowired
     private lateinit var api: ControllerApi
 

@@ -1,7 +1,7 @@
 package app.prepmymealy.application.acceptance
 
 import app.prepmymealy.application.acceptance.api.ControllerApi
-import app.prepmymealy.application.domain.Settings
+import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.repository.SettingsRepository
 import app.prepmymealy.application.repository.UserRepository
 import app.prepmymealy.application.testsupport.AbstractSpringTest
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 
-class SettingsControllerAcceptanceTest : AbstractSpringTest() {
+class SettingsControllerAcceptanceOutputDeterminationService : AbstractSpringTest() {
     @Autowired
     private lateinit var api: ControllerApi
 
@@ -42,8 +42,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 dietaryPreferences = listOf("Dietary Preference1", "Dietary Preference2"),
                 kitchenEquipment = listOf("KitchenEquipment1", "KitchenEquipment2"),
                 includeDiscounts = true,
-                people = 2,
-                mealsPerDay = 2,
             )
         settingsRepository.save(settings)
         // when
@@ -60,9 +58,7 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 "\"allergies\":[\"Allergy1\",\"Allergy2\"]," +
                 "\"dietaryPreferences\":[\"Dietary Preference1\",\"Dietary Preference2\"]," +
                 "\"kitchenEquipment\":[\"KitchenEquipment1\",\"KitchenEquipment2\"]," +
-                "\"includeDiscounts\":true," +
-                "\"people\":2," +
-                "\"mealsPerDay\":2" +
+                "\"includeDiscounts\":true" +
                 "}"
         assertThat(response.body).isEqualTo(expectedJson)
     }
@@ -98,8 +94,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 dietaryPreferences = listOf("Dietary Preference1", "Dietary Preference2"),
                 kitchenEquipment = listOf("KitchenEquipment1", "KitchenEquipment2"),
                 includeDiscounts = true,
-                people = 2,
-                mealsPerDay = 2,
             )
         // when
         val response = api.postSettings(settings)
@@ -133,8 +127,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 dietaryPreferences = listOf("Dietary Preference1", "Dietary Preference2"),
                 kitchenEquipment = listOf("KitchenEquipment1", "KitchenEquipment2"),
                 includeDiscounts = true,
-                people = 2,
-                mealsPerDay = 2,
             )
         val updatedSettings =
             Settings(
@@ -147,8 +139,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 dietaryPreferences = listOf("Dietary Preference1", "Dietary Preference2", "Dietary Preference3"),
                 kitchenEquipment = listOf("KitchenEquipment1", "KitchenEquipment2", "KitchenEquipment3"),
                 includeDiscounts = false,
-                people = 3,
-                mealsPerDay = 3,
             )
         settingsRepository.save(settings)
         // when
@@ -177,8 +167,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 dietaryPreferences = listOf("Dietary Preference1", "Dietary Preference2"),
                 kitchenEquipment = listOf("KitchenEquipment1", "KitchenEquipment2"),
                 includeDiscounts = true,
-                people = 2,
-                mealsPerDay = 2,
             )
         settingsRepository.save(settings)
         val updatedSettings =
@@ -192,8 +180,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 dietaryPreferences = listOf("Dietary Preference1", "Dietary Preference2", "Dietary Preference3"),
                 kitchenEquipment = listOf("KitchenEquipment1", "KitchenEquipment2", "KitchenEquipment3"),
                 includeDiscounts = false,
-                people = 3,
-                mealsPerDay = 3,
             )
         // when
         val response = api.putSettings(userId, updatedSettings)
@@ -221,8 +207,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                 dietaryPreferences = listOf("Dietary Preference1", "Dietary Preference2"),
                 kitchenEquipment = listOf("KitchenEquipment1", "KitchenEquipment2"),
                 includeDiscounts = true,
-                people = 2,
-                mealsPerDay = 2,
             )
         settingsRepository.save(settings)
         val updatedSettings =
@@ -241,8 +225,6 @@ class SettingsControllerAcceptanceTest : AbstractSpringTest() {
                         "KitchenEquipment3",
                     ),
                 includeDiscounts = false,
-                people = 3,
-                mealsPerDay = 3,
             )
         // when
         val response = api.putSettings(userId, updatedSettings)

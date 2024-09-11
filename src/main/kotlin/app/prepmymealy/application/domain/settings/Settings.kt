@@ -1,4 +1,4 @@
-package app.prepmymealy.application.domain
+package app.prepmymealy.application.domain.settings
 
 import com.fasterxml.jackson.annotation.JsonCreator
 import org.springframework.data.annotation.Id
@@ -18,6 +18,6 @@ data class Settings
         val dietaryPreferences: List<String>? = null,
         val kitchenEquipment: List<String>? = null,
         val includeDiscounts: Boolean? = null,
-        val people: Long? = null,
-        val mealsPerDay: Long? = null,
+        val overallWeeklySettings: ReducedWeeklySettings? = null,
+        val weeklySettings: WeeklySettings? = null,
     )

@@ -1,7 +1,7 @@
 package app.prepmymealy.application.controller
 
 import app.prepmymealy.application.converter.SettingsToSettingsRepresentationConverter
-import app.prepmymealy.application.domain.Settings
+import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.representation.SettingsRepresentation
 import app.prepmymealy.application.service.SettingsService
 import app.prepmymealy.application.service.SettingsUpdateService
@@ -20,7 +20,7 @@ import org.springframework.http.HttpStatus
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
-class SettingsControllerTest {
+class SettingsControllerOutputDeterminationService {
     private val converter: SettingsToSettingsRepresentationConverter = mock()
     private val service: SettingsService = mock()
     private val updateService: SettingsUpdateService = mock()

@@ -1,6 +1,6 @@
 package app.prepmymealy.application.service
 
-import app.prepmymealy.application.domain.Discount
+import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.repository.DiscountRepository
 import org.springframework.stereotype.Service
 

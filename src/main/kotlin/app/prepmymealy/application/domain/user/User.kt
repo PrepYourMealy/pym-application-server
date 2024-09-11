@@ -1,4 +1,4 @@
-package app.prepmymealy.application.domain
+package app.prepmymealy.application.domain.user
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

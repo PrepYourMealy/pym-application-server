@@ -1,9 +1,9 @@
 package app.prepmymealy.application.service
 
-import app.prepmymealy.application.domain.Settings
-import app.prepmymealy.application.domain.User
-import app.prepmymealy.application.domain.UserLimits
-import app.prepmymealy.application.domain.UserStats
+import app.prepmymealy.application.domain.settings.Settings
+import app.prepmymealy.application.domain.user.User
+import app.prepmymealy.application.domain.user.UserLimits
+import app.prepmymealy.application.domain.user.UserStats
 import app.prepmymealy.application.repository.SettingsRepository
 import app.prepmymealy.application.repository.UserRepository
 import org.springframework.stereotype.Service

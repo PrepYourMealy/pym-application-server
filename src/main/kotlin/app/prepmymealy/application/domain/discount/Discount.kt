@@ -1,5 +1,6 @@
-package app.prepmymealy.application.domain
+package app.prepmymealy.application.domain.discount
 
+import app.prepmymealy.application.domain.menu.DataOrigin
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 

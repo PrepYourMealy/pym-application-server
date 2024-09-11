@@ -1,7 +1,7 @@
 package app.prepmymealy.application.service
 
 import app.prepmymealy.application.configuration.SettingsConfigurationProperties
-import app.prepmymealy.application.domain.Settings
+import app.prepmymealy.application.domain.settings.Settings
 import org.springframework.stereotype.Service
 import java.util.Optional
 
@@ -23,9 +23,9 @@ class SettingsValidationService(
         val errorMap = mutableMapOf<String, String>()
 
         // Validate numeric properties with limits
-        validateNumeric(settings.people, settingLimits.minPeople, settingLimits.maxPeople, "people", errorMap)
+
+        // TODO: add people check
         validateNumeric(settings.budget, settingLimits.minBudget, settingLimits.maxBudget, "budget", errorMap)
-        validateNumeric(settings.mealsPerDay, settingLimits.minMealsPerDay, settingLimits.maxMealsPerDay, "mealsPerDay", errorMap)
 
         // Validate collection lengths
         validateCollectionSize(

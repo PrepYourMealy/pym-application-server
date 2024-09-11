@@ -1,6 +1,6 @@
 package app.prepmymealy.application.converter
 
-import app.prepmymealy.application.domain.Settings
+import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.representation.SettingsRepresentation
 import org.springframework.stereotype.Component
 
@@ -18,8 +18,6 @@ class SettingsToSettingsRepresentationConverter : Converter<Settings?, SettingsR
                 it.dietaryPreferences,
                 it.kitchenEquipment,
                 it.includeDiscounts,
-                it.people,
-                it.mealsPerDay,
             )
         }
     }

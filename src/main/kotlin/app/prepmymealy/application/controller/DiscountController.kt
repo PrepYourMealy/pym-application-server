@@ -1,6 +1,6 @@
 package app.prepmymealy.application.controller
 
-import app.prepmymealy.application.domain.Discount
+import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.service.DiscountService
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
