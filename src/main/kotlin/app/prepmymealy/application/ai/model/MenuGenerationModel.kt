@@ -2,8 +2,10 @@ package app.prepmymealy.application.ai.model
 
 import app.prepmymealy.application.ai.response.MenuResponse
 import app.prepmymealy.application.ai.service.OutputDeterminationService
+import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.domain.menu.Menu
 import app.prepmymealy.application.domain.settings.Settings
+import app.prepmymealy.application.service.DiscountService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.ai.openai.OpenAiChatModel
@@ -14,12 +16,24 @@ import org.springframework.stereotype.Component
 
 
 @Component
-class MenuGenerationModel(private val objectMapper: ObjectMapper,
-                          private val outputDeterminationService: OutputDeterminationService,
-                          private val openAiChatModel: OpenAiChatModel) {
+class MenuGenerationModel(
+    private val objectMapper: ObjectMapper,
+    private val outputDeterminationService: OutputDeterminationService,
+    private val discountService: DiscountService,
+    private val openAiChatModel: OpenAiChatModel
+) {
+
+    private var discountCache: List<Discount>? = null
+
+    fun reloadDiscountCache() {
+        discountCache = discountService.getAllDiscounts()
+    }
 
 
     fun generateMenu(settings: Settings): MenuResponse {
+        if (settings.includeDiscounts == true && discountCache == null) {
+            discountCache = discountService.getAllDiscounts()
+        }
         val prompt = generatePrompt(settings)
         val response = openAiChatModel.call(prompt)
         val content = response.result.output.content
@@ -32,7 +46,12 @@ class MenuGenerationModel(private val objectMapper: ObjectMapper,
             generatePromptText(settings),
             OpenAiChatOptions.builder()
                 .withModel(OpenAiApi.ChatModel.GPT_4_O_MINI)
-                .withResponseFormat(ResponseFormat(ResponseFormat.Type.JSON_SCHEMA, outputDeterminationService.generateSchemaForSettings(settings).toString()))
+                .withResponseFormat(
+                    ResponseFormat(
+                        ResponseFormat.Type.JSON_SCHEMA,
+                        outputDeterminationService.generateSchemaForSettings(settings).toString()
+                    )
+                )
                 .build()
         )
         return prompt
@@ -56,7 +75,11 @@ class MenuGenerationModel(private val objectMapper: ObjectMapper,
             prompt += "Folgende Zutaten werden nicht gerne gegessen: ${settings.dislikedIngredients.joinToString(", ")}. Versuche diese Zutaten zu vermeiden."
         }
         if (!settings.dietaryPreferences.isNullOrEmpty()) {
-            prompt += "Folgende Ernährungspräferenzen sollten beachtet werden: ${settings.dietaryPreferences.joinToString(", ")}. Suche nach Gerichten die diesen Präferenzen entsprechen."
+            prompt += "Folgende Ernährungspräferenzen sollten beachtet werden: ${
+                settings.dietaryPreferences.joinToString(
+                    ", "
+                )
+            }. Suche nach Gerichten die diesen Präferenzen entsprechen."
         }
         if (!settings.allergies.isNullOrEmpty()) {
             prompt += "Folgende Allergien sollten beachtet werden: ${settings.allergies.joinToString(", ")}. Suche nach Gerichten die diese Allergien nicht enthalten."
