@@ -1,5 +1,6 @@
 package app.prepmymealy.application.controller
 
+import app.prepmymealy.application.configuration.AppConfig
 import app.prepmymealy.application.converter.SettingsToSettingsRepresentationConverter
 import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.representation.ApiErrorRepresentation
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.Objects
 
 @RestController
-@RequestMapping(SettingsController.SETTINGS_PATH)
+@RequestMapping(AppConfig.API_VERSION + SettingsController.SETTINGS_PATH)
 class SettingsController(
     private val settingsService: SettingsService,
     private val converter: SettingsToSettingsRepresentationConverter,

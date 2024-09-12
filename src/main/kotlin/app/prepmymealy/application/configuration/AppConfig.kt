@@ -14,6 +14,10 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableConfigurationProperties
 @ConfigurationPropertiesScan
 class AppConfig {
+    companion object {
+        const val API_VERSION = "/v1"
+    }
+
     @Bean
     @Primary
     fun objectMapper(): ObjectMapper {
