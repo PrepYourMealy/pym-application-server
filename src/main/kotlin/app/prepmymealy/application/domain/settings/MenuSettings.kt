@@ -12,10 +12,12 @@ data class MenuSettings(
 
     data class Builder(
         var isActive: Boolean = true,
-        var people: Int = 2
+        var people: Int = 2,
     ) {
         fun isActive(isActive: Boolean) = apply { this.isActive = isActive }
+
         fun people(people: Int) = apply { this.people = people }
+
         fun build() = MenuSettings(isActive, people)
     }
 }

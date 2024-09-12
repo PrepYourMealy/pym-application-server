@@ -13,6 +13,7 @@ data class ReducedWeeklySettings(
         var overall: DailySettings? = null,
     ) {
         fun overall(overall: DailySettings) = apply { this.overall = overall }
+
         fun build() = ReducedWeeklySettings(overall)
     }
 }

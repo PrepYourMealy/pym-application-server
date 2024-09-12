@@ -122,7 +122,7 @@ class OutputDeterminationService {
                     .put("type", "integer"),
             )
         recipeSchema.put("properties", properties)
-        recipeSchema.put("required",  getRequiredKeys(properties))
+        recipeSchema.put("required", getRequiredKeys(properties))
         recipeSchema.put("additionalProperties", false)
         return recipeSchema
     }
@@ -231,11 +231,11 @@ class OutputDeterminationService {
         return shoppingListItemSchema
     }
 
-    private fun generateRecipeRef() : JSONObject {
+    private fun generateRecipeRef(): JSONObject {
         val recipeRef = JSONObject()
         recipeRef.put("\$ref", "#/definitions/recipe")
         return recipeRef
     }
 
-    private fun getRequiredKeys(properties: JSONObject) : JSONArray = JSONArray(properties.keys().asSequence().toList())
+    private fun getRequiredKeys(properties: JSONObject): JSONArray = JSONArray(properties.keys().asSequence().toList())
 }

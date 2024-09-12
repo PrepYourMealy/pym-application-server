@@ -8,9 +8,10 @@ data class UserStats(val weeklyRegenerateRequest: Int = 0) {
     fun toBuilder() = Builder(weeklyRegenerateRequest)
 
     data class Builder(
-        var weeklyRegenerateRequest: Int = 0
+        var weeklyRegenerateRequest: Int = 0,
     ) {
         fun weeklyRegenerateRequest(weeklyRegenerateRequest: Int) = apply { this.weeklyRegenerateRequest = weeklyRegenerateRequest }
+
         fun build() = UserStats(weeklyRegenerateRequest)
     }
 }

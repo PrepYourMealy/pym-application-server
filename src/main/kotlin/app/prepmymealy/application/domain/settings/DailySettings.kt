@@ -19,9 +19,13 @@ data class DailySettings(
         var dinner: MenuSettings? = null,
     ) {
         fun overall(overall: MenuSettings) = apply { this.overall = overall }
+
         fun breakfast(breakfast: MenuSettings) = apply { this.breakfast = breakfast }
+
         fun lunch(lunch: MenuSettings) = apply { this.lunch = lunch }
+
         fun dinner(dinner: MenuSettings) = apply { this.dinner = dinner }
+
         fun build() = DailySettings(overall, breakfast, lunch, dinner)
     }
 }

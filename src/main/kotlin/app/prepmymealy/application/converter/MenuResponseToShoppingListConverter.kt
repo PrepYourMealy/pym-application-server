@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class MenuResponseToShoppingListConverter {
-    fun convert(response: MenuResponse, userId: String): ShoppingList {
+    fun convert(
+        response: MenuResponse,
+        userId: String,
+    ): ShoppingList {
         return ShoppingList(id = userId, list = response.list!!) // It is safe to use !! here because the list is never null
     }
 }

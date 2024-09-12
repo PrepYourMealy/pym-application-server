@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class MenuResponseToMenuConverter {
-
-    fun convert(response: MenuResponse, userId: String): Menu {
+    fun convert(
+        response: MenuResponse,
+        userId: String,
+    ): Menu {
         return Menu(
             id = userId,
             mon = response.mon,
@@ -16,7 +18,7 @@ class MenuResponseToMenuConverter {
             thu = response.thu,
             fri = response.fri,
             sat = response.sat,
-            sun = response.sun
+            sun = response.sun,
         )
     }
 }

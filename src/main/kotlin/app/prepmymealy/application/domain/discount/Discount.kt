@@ -22,18 +22,19 @@ data class Discount(
         fun builder() = Builder()
     }
 
-    fun toBuilder() = Builder(
-        id,
-        img,
-        name,
-        description,
-        price,
-        originalPrice,
-        discount,
-        packaging,
-        availability,
-        dataOrigin
-    )
+    fun toBuilder() =
+        Builder(
+            id,
+            img,
+            name,
+            description,
+            price,
+            originalPrice,
+            discount,
+            packaging,
+            availability,
+            dataOrigin,
+        )
 
     data class Builder(
         var id: String? = null,
@@ -45,18 +46,28 @@ data class Discount(
         var discount: String? = null,
         var packaging: String? = null,
         var availability: String? = null,
-        var dataOrigin: DataOrigin? = null
+        var dataOrigin: DataOrigin? = null,
     ) {
         fun id(id: String) = apply { this.id = id }
+
         fun img(img: String) = apply { this.img = img }
+
         fun name(name: String) = apply { this.name = name }
+
         fun description(description: String) = apply { this.description = description }
+
         fun price(price: String) = apply { this.price = price }
+
         fun originalPrice(originalPrice: String) = apply { this.originalPrice = originalPrice }
+
         fun discount(discount: String) = apply { this.discount = discount }
+
         fun packaging(packaging: String) = apply { this.packaging = packaging }
+
         fun availability(availability: String) = apply { this.availability = availability }
+
         fun dataOrigin(dataOrigin: DataOrigin) = apply { this.dataOrigin = dataOrigin }
+
         fun build() = Discount(id, img, name, description, price, originalPrice, discount, packaging, availability, dataOrigin)
     }
 }
