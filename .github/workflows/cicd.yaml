@@ -1,0 +1,46 @@
+name: CI & CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java-version: [20]
+
+    steps:
+      # Checkout the code from the repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Java 20
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # You can also use 'zulu' if needed
+          java-version: ${{ matrix.java-version }}
+
+      # Cache Gradle dependencies
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Run the tests
+      - name: Run tests
+        run: ./gradlew test
