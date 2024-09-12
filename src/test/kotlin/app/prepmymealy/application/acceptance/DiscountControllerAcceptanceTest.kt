@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 
-class DiscountControllerAcceptanceOutputDeterminationService : AbstractSpringTest() {
+class DiscountControllerAcceptanceTest : AbstractSpringTest() {
     @Autowired
     private lateinit var api: ControllerApi
 

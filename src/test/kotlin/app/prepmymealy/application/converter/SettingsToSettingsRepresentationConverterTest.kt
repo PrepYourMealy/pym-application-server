@@ -5,7 +5,7 @@ import app.prepmymealy.application.representation.SettingsRepresentation
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class SettingsToSettingsRepresentationConverterOutputDeterminationService {
+class SettingsToSettingsRepresentationConverterTest {
     private val converter = SettingsToSettingsRepresentationConverter()
 
     @Test

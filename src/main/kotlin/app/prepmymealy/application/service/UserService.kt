@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(private val userRepository: UserRepository) {
 
-
     @Scheduled(cron = "0 50 9 * * Mon")
     fun resetWeeklyRegenerateRequest() {
         userRepository.findAllUsersAsStream()

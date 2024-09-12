@@ -14,7 +14,7 @@ import org.mockito.kotlin.*
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
-class SettingsUpdateServiceOutputDeterminationService {
+class SettingsUpdateServiceTest {
     private val settingsRepository: SettingsRepository = mock()
     private val userRepository: UserRepository = mock()
     private val service = SettingsUpdateService(settingsRepository, userRepository)

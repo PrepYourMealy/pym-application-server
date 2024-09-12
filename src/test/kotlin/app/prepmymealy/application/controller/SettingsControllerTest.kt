@@ -20,7 +20,7 @@ import org.springframework.http.HttpStatus
 import java.util.*
 
 @ExtendWith(MockitoExtension::class)
-class SettingsControllerOutputDeterminationService {
+class SettingsControllerTest {
     private val converter: SettingsToSettingsRepresentationConverter = mock()
     private val service: SettingsService = mock()
     private val updateService: SettingsUpdateService = mock()

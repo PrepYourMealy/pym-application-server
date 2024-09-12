@@ -5,7 +5,7 @@ import app.prepmymealy.application.domain.settings.Settings
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class SettingsValidationServiceOutputDeterminationService {
+class SettingsValidationServiceTest {
     private val settingLimits =
         SettingsConfigurationProperties(
             maxStringSize = 10,
