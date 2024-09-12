@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class Ingredient
     @JsonCreator
     constructor(
-        @JsonProperty(required = true)
-        val name: String,
-        @JsonProperty(required = true)
-        val quantity: Int,
-        @JsonProperty(required = true)
-        val unit: String,
+        @JsonProperty("name") val name: String,
+        @JsonProperty("quantity") val quantity: Int,
+        @JsonProperty("unit") val unit: String,
     )

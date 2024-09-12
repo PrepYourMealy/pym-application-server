@@ -1,0 +1,976 @@
+{
+  "thu": {
+    "lunch": {
+      "servings": 2,
+      "name": "Quinoasalat mit Gemüse",
+      "cookTime": 15,
+      "description": "Ein frischer Quinoasalat, reich an Nährstoffen.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 150,
+          "name": "Quinoa"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Gurke"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Kirschtomaten"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Feta-Käse"
+        },
+        {
+          "unit": "ml",
+          "quantity": 30,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 10,
+          "name": "Zitronensaft"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Petersilie"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Quinoa nach Packungsanweisung kochen und abkühlen lassen."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Paprika, Gurke und Kirschtomaten klein schneiden."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Alle Zutaten in einer Schüssel vermengen und mit Olivenöl, Zitronensaft, Salz und Pfeffer abschmecken."
+        }
+      ],
+      "tags": [
+        "salat",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 10
+    },
+    "dinner": {
+      "servings": 2,
+      "name": "Hähnchen mit Süßkartoffeln und Brokkoli",
+      "cookTime": 30,
+      "description": "Ein gesundes und sättigendes Gericht mit Hähnchen und Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 300,
+          "name": "Hähnchenbrustfilet"
+        },
+        {
+          "unit": "g",
+          "quantity": 400,
+          "name": "Süßkartoffeln"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Brokkoli"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Knoblauch"
+        },
+        {
+          "unit": "g",
+          "quantity": 2,
+          "name": "Rosmarin"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 10,
+          "description": "Süßkartoffeln schälen, würfeln und in einem Topf mit Wasser kochen."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Hähnchenbrustfilet in einer Pfanne mit Olivenöl, Knoblauch und Rosmarin anbraten."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Brokkoli in kochendem Wasser blanchieren und zusammen mit dem Hähnchen und den Süßkartoffeln servieren."
+        }
+      ],
+      "tags": [
+        "hauptgericht",
+        "einfach",
+        "gesund"
+      ],
+      "prepTime": 10
+    }
+  },
+  "tue": {
+    "lunch": {
+      "servings": 2,
+      "name": "Linsensuppe mit Gemüse",
+      "cookTime": 25,
+      "description": "Eine nahrhafte Linsensuppe voller Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "rote Linsen"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Karotten"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Sellerie"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Zwiebel"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "l",
+          "quantity": 1,
+          "name": "Gemüsebrühe"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Thymian"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Zwiebel, Karotten und Sellerie klein schneiden."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Gemüse in einem Topf mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Linsen und Gemüsebrühe hinzufügen und 15 Minuten köcheln lassen."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Mit Thymian würzen und servieren."
+        }
+      ],
+      "tags": [
+        "suppe",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 10
+    },
+    "dinner": {
+      "servings": 2,
+      "name": "Zucchini-Nudeln mit Pesto",
+      "cookTime": 20,
+      "description": "Ein leichtes Gericht mit Zucchini-Nudeln und frischem Pesto.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 300,
+          "name": "Zucchini"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Pesto"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Parmesan"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Pinienkerne"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 10,
+          "description": "Zucchini mit einem Spiralschneider in Nudeln schneiden."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Zucchini-Nudeln in einer Pfanne mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Pesto und Parmesan hinzufügen und gut vermengen."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Mit Pinienkernen garnieren und servieren."
+        }
+      ],
+      "tags": [
+        "pastagericht",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 10
+    }
+  },
+  "wed": {
+    "lunch": {
+      "servings": 2,
+      "name": "Kichererbsensalat",
+      "cookTime": 10,
+      "description": "Ein proteinreicher Salat mit Kichererbsen und frischem Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Kichererbsen (aus der Dose)"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Gurke"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Zwiebel"
+        },
+        {
+          "unit": "ml",
+          "quantity": 30,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 10,
+          "name": "Zitronensaft"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Petersilie"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Paprika, Gurke und Zwiebel klein schneiden."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Alle Zutaten in einer Schüssel vermengen und mit Olivenöl, Zitronensaft, Salz und Pfeffer abschmecken."
+        }
+      ],
+      "tags": [
+        "salat",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 5
+    },
+    "dinner": {
+      "servings": 2,
+      "name": "Rindersteak mit Gemüse",
+      "cookTime": 25,
+      "description": "Ein köstliches Rindersteak mit buntem Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 300,
+          "name": "Rindersteak"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Zucchini"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Knoblauch"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Rosmarin"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 10,
+          "description": "Rindersteak in einer Pfanne mit Olivenöl, Knoblauch und Rosmarin anbraten."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Paprika und Zucchini in der gleichen Pfanne anbraten."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Steak ruhen lassen und zusammen mit dem Gemüse servieren."
+        }
+      ],
+      "tags": [
+        "hauptgericht",
+        "einfach",
+        "gesund"
+      ],
+      "prepTime": 10
+    }
+  },
+  "sat": {
+    "lunch": {
+      "servings": 2,
+      "name": "Tomatensuppe",
+      "cookTime": 20,
+      "description": "Eine einfache und leckere Tomatensuppe.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 400,
+          "name": "Tomaten (frisch oder aus der Dose)"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Zwiebel"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "l",
+          "quantity": 1,
+          "name": "Gemüsebrühe"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Basilikum"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Zwiebel klein schneiden und in einem Topf mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Tomaten und Gemüsebrühe hinzufügen und 10 Minuten köcheln lassen."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Mit Basilikum würzen und pürieren."
+        }
+      ],
+      "tags": [
+        "suppe",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 5
+    },
+    "dinner": {
+      "servings": 2,
+      "name": "Fischfilet mit Gemüse",
+      "cookTime": 20,
+      "description": "Ein leichtes Fischgericht mit frischem Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 300,
+          "name": "Fischfilet (z.B. Lachs)"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Brokkoli"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Karotten"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Zitronensaft"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 10,
+          "description": "Fischfilet in einer Pfanne mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Brokkoli und Karotten in kochendem Wasser blanchieren."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Fisch mit Gemüse anrichten und mit Zitronensaft beträufeln."
+        }
+      ],
+      "tags": [
+        "hauptgericht",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 10
+    }
+  },
+  "list": [
+    {
+      "unit": "g",
+      "quantity": 200,
+      "price": 0.65,
+      "origin": "Deutschland",
+      "name": "rote Linsen"
+    },
+    {
+      "unit": "g",
+      "quantity": 150,
+      "price": 1.50,
+      "origin": "Deutschland",
+      "name": "Quinoa"
+    },
+    {
+      "unit": "g",
+      "quantity": 200,
+      "price": 1.00,
+      "origin": "Deutschland",
+      "name": "Paprika"
+    },
+    {
+      "unit": "g",
+      "quantity": 400,
+      "price": 1.10,
+      "origin": "Deutschland",
+      "name": "Tomaten"
+    },
+    {
+      "unit": "g",
+      "quantity": 100,
+      "price": 0.50,
+      "origin": "Deutschland",
+      "name": "Karotten"
+    },
+    {
+      "unit": "g",
+      "quantity": 100,
+      "price": 0.60,
+      "origin": "Deutschland",
+      "name": "Gurke"
+    },
+    {
+      "unit": "g",
+      "quantity": 100,
+      "price": 0.80,
+      "origin": "Deutschland",
+      "name": "Zucchini"
+    },
+    {
+      "unit": "g",
+      "quantity": 200,
+      "price": 1.00,
+      "origin": "Deutschland",
+      "name": "Brokkoli"
+    },
+    {
+      "unit": "g",
+      "quantity": 50,
+      "price": 0.60,
+      "origin": "Deutschland",
+      "name": "Feta-Käse"
+    },
+    {
+      "unit": "g",
+      "quantity": 50,
+      "price": 1.00,
+      "origin": "Deutschland",
+      "name": "Pesto"
+    },
+    {
+      "unit": "g",
+      "quantity": 300,
+      "price": 3.50,
+      "origin": "Deutschland",
+      "name": "Hähnchenbrustfilet"
+    },
+    {
+      "unit": "g",
+      "quantity": 300,
+      "price": 4.00,
+      "origin": "Deutschland",
+      "name": "Rindersteak"
+    },
+    {
+      "unit": "g",
+      "quantity": 300,
+      "price": 5.00,
+      "origin": "Norwegen",
+      "name": "Fischfilet (z.B. Lachs)"
+    },
+    {
+      "unit": "g",
+      "quantity": 50,
+      "price": 0.80,
+      "origin": "Deutschland",
+      "name": "Zwiebel"
+    },
+    {
+      "unit": "ml",
+      "quantity": 30,
+      "price": 0.50,
+      "origin": "Griechenland",
+      "name": "Olivenöl"
+    },
+    {
+      "unit": "g",
+      "quantity": 5,
+      "price": 0.20,
+      "origin": "Deutschland",
+      "name": "Knoblauch"
+    },
+    {
+      "unit": "l",
+      "quantity": 1,
+      "price": 0.80,
+      "origin": "Deutschland",
+      "name": "Gemüsebrühe"
+    },
+    {
+      "unit": "g",
+      "quantity": 5,
+      "price": 0.10,
+      "origin": "Frankreich",
+      "name": "Basilikum"
+    },
+    {
+      "unit": "g",
+      "quantity": 5,
+      "price": 0.10,
+      "origin": "Frankreich",
+      "name": "Thymian"
+    },
+    {
+      "unit": "g",
+      "quantity": 5,
+      "price": 0.10,
+      "origin": "Frankreich",
+      "name": "Rosmarin"
+    },
+    {
+      "unit": "ml",
+      "quantity": 20,
+      "price": 0.40,
+      "origin": "Griechenland",
+      "name": "Zitronensaft"
+    },
+    {
+      "unit": "g",
+      "quantity": 100,
+      "price": 0.80,
+      "origin": "Deutschland",
+      "name": "Pinienkerne"
+    },
+    {
+      "unit": "g",
+      "quantity": 5,
+      "price": 0.20,
+      "origin": "Deutschland",
+      "name": "Petersilie"
+    }
+  ],
+  "fri": {
+    "lunch": {
+      "servings": 2,
+      "name": "Bulgur mit Gemüse",
+      "cookTime": 20,
+      "description": "Ein einfaches Gericht mit Bulgur und frischem Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 150,
+          "name": "Bulgur"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Zucchini"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Zwiebel"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Bulgur nach Packungsanweisung kochen."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Zwiebel und Gemüse in einer Pfanne mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Bulgur unter das Gemüse mischen und servieren."
+        }
+      ],
+      "tags": [
+        "beilage",
+        "einfach",
+        "gesund"
+      ],
+      "prepTime": 10
+    },
+    "dinner": {
+      "servings": 2,
+      "name": "Gemüseomelette",
+      "cookTime": 15,
+      "description": "Ein leichtes und schnelles Gemüseomelette.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 4,
+          "name": "Eier"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Zucchini"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Zwiebel"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Zwiebel und Gemüse klein schneiden."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Eier aufschlagen und in einer Schüssel verquirlen."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Gemüse in einer Pfanne anbraten und die Eier darüber gießen."
+        }
+      ],
+      "tags": [
+        "frühstück",
+        "einfach",
+        "gesund"
+      ],
+      "prepTime": 5
+    }
+  },
+  "mon": {
+    "lunch": {
+      "servings": 2,
+      "name": "Gemüsepfanne mit Reis",
+      "cookTime": 25,
+      "description": "Eine bunte Gemüsepfanne mit Reis.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Reis"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Zucchini"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Brokkoli"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 10,
+          "description": "Reis nach Packungsanweisung kochen."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Gemüse in einer Pfanne mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Reis unter das Gemüse mischen und servieren."
+        }
+      ],
+      "tags": [
+        "beilage",
+        "einfach",
+        "gesund"
+      ],
+      "prepTime": 5
+    },
+    "dinner": {
+      "servings": 2,
+      "name": "Curry-Gemüse mit Kichererbsen",
+      "cookTime": 30,
+      "description": "Ein nahrhaftes Currygericht mit Kichererbsen und Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Kichererbsen (aus der Dose)"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Brokkoli"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Karotten"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Zwiebel"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 5,
+          "name": "Currypulver"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Zwiebel und Gemüse klein schneiden."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Gemüse in einem Topf mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 10,
+          "description": "Kichererbsen und Currypulver hinzufügen und 10 Minuten köcheln lassen."
+        }
+      ],
+      "tags": [
+        "hauptgericht",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 5
+    }
+  },
+  "sun": {
+    "lunch": {
+      "servings": 2,
+      "name": "Bohnen-Salat mit Avocado",
+      "cookTime": 15,
+      "description": "Ein gesunder Salat mit Bohnen und Avocado.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Bohnen (Dose)"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Avocado"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Tomaten"
+        },
+        {
+          "unit": "ml",
+          "quantity": 30,
+          "name": "Olivenöl"
+        },
+        {
+          "unit": "g",
+          "quantity": 10,
+          "name": "Zitronensaft"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 5,
+          "description": "Tomaten und Avocado klein schneiden."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Alle Zutaten in einer Schüssel vermengen und mit Olivenöl und Zitronensaft abschmecken."
+        }
+      ],
+      "tags": [
+        "salat",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 5
+    },
+    "dinner": {
+      "servings": 2,
+      "name": "Pasta mit Gemüse",
+      "cookTime": 20,
+      "description": "Ein einfaches Pasta-Gericht mit frischem Gemüse.",
+      "ingredients": [
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Pasta"
+        },
+        {
+          "unit": "g",
+          "quantity": 200,
+          "name": "Paprika"
+        },
+        {
+          "unit": "g",
+          "quantity": 100,
+          "name": "Zucchini"
+        },
+        {
+          "unit": "g",
+          "quantity": 50,
+          "name": "Zwiebel"
+        },
+        {
+          "unit": "ml",
+          "quantity": 20,
+          "name": "Olivenöl"
+        }
+      ],
+      "steps": [
+        {
+          "durationInMin": 10,
+          "description": "Pasta nach Packungsanweisung kochen."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Zwiebel und Gemüse in einer Pfanne mit Olivenöl anbraten."
+        },
+        {
+          "durationInMin": 5,
+          "description": "Pasta mit Gemüse vermengen und servieren."
+        }
+      ],
+      "tags": [
+        "pastagericht",
+        "gesund",
+        "einfach"
+      ],
+      "prepTime": 5
+    }
+  }
+}

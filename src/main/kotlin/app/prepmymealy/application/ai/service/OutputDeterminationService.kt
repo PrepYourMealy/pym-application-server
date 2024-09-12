@@ -1,7 +1,8 @@
-package app.prepmymealy.application.ai
+package app.prepmymealy.application.ai.service
 
 import app.prepmymealy.application.domain.settings.DailySettings
 import app.prepmymealy.application.domain.settings.Settings
+import org.json.JSONArray
 import org.json.JSONObject
 import org.springframework.stereotype.Service
 
@@ -17,6 +18,9 @@ class OutputDeterminationService {
 
     private fun generateMenuSchema(settings: Settings): JSONObject {
         val menuSchema = JSONObject()
+        val definitions = JSONObject()
+        definitions.put("recipe", generateRecipeSchema())
+        menuSchema.put("definitions", definitions)
         menuSchema.put("type", "object")
         val properties = JSONObject().put("list", generateShoppingListItemsSchema())
         settings.overallWeeklySettings?.let {
@@ -34,7 +38,7 @@ class OutputDeterminationService {
             properties.put("sun", generateDayMenuSchema(it.sunday))
         }
         menuSchema.put("properties", properties)
-        menuSchema.put("required", properties.keys())
+        menuSchema.put("required", getRequiredKeys(properties))
         menuSchema.put("additionalProperties", false)
         return menuSchema
     }
@@ -44,33 +48,33 @@ class OutputDeterminationService {
         dayMenuSchema.put("type", "object")
         val properties = JSONObject()
         settings?.overall?.let {
-            properties.put("breakfast", generateRecipeSchema())
-            properties.put("lunch", generateRecipeSchema())
-            properties.put("dinner", generateRecipeSchema())
+            properties.put("breakfast", generateRecipeRef())
+            properties.put("lunch", generateRecipeRef())
+            properties.put("dinner", generateRecipeRef())
         }
         settings?.breakfast?.let {
             if (it.isActive) {
-                properties.put("breakfast", generateRecipeSchema())
+                properties.put("breakfast", generateRecipeRef())
             } else {
                 properties.remove("breakfast")
             }
         }
         settings?.lunch?.let {
             if (it.isActive) {
-                properties.put("lunch", generateRecipeSchema())
+                properties.put("lunch", generateRecipeRef())
             } else {
                 properties.remove("lunch")
             }
         }
         settings?.dinner?.let {
             if (it.isActive) {
-                properties.put("dinner", generateRecipeSchema())
+                properties.put("dinner", generateRecipeRef())
             } else {
                 properties.remove("dinner")
             }
         }
         dayMenuSchema.put("properties", properties)
-        dayMenuSchema.put("required", properties.keys())
+        dayMenuSchema.put("required", getRequiredKeys(properties))
         dayMenuSchema.put("additionalProperties", false)
         return dayMenuSchema
     }
@@ -118,7 +122,7 @@ class OutputDeterminationService {
                     .put("type", "integer"),
             )
         recipeSchema.put("properties", properties)
-        recipeSchema.put("required", properties.keys())
+        recipeSchema.put("required",  getRequiredKeys(properties))
         recipeSchema.put("additionalProperties", false)
         return recipeSchema
     }
@@ -151,7 +155,7 @@ class OutputDeterminationService {
                         .put("type", "string"),
                 )
         ingredientSchema.put("properties", properties)
-        ingredientSchema.put("required", properties.keys())
+        ingredientSchema.put("required", getRequiredKeys(properties))
         ingredientSchema.put("additionalProperties", false)
         return ingredientSchema
     }
@@ -179,7 +183,7 @@ class OutputDeterminationService {
                         .put("type", "integer"),
                 )
         stepSchema.put("properties", properties)
-        stepSchema.put("required", properties.keys())
+        stepSchema.put("required", getRequiredKeys(properties))
         stepSchema.put("additionalProperties", false)
         return stepSchema
     }
@@ -222,8 +226,16 @@ class OutputDeterminationService {
                         .put("type", "string"),
                 )
         shoppingListItemSchema.put("properties", properties)
-        shoppingListItemSchema.put("required", properties.keys())
+        shoppingListItemSchema.put("required", getRequiredKeys(properties))
         shoppingListItemSchema.put("additionalProperties", false)
         return shoppingListItemSchema
     }
+
+    private fun generateRecipeRef() : JSONObject {
+        val recipeRef = JSONObject()
+        recipeRef.put("\$ref", "#/definitions/recipe")
+        return recipeRef
+    }
+
+    private fun getRequiredKeys(properties: JSONObject) : JSONArray = JSONArray(properties.keys().asSequence().toList())
 }

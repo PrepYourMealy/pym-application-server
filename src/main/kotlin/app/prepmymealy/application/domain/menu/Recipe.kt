@@ -6,20 +6,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class Recipe
     @JsonCreator
     constructor(
-        @JsonProperty(required = true)
-        val name: String,
-        @JsonProperty(required = true)
-        val description: String,
-        @JsonProperty(required = true)
-        val ingredients: List<Ingredient>,
-        @JsonProperty(required = true)
-        val steps: List<Step>,
-        @JsonProperty(required = true)
-        val tags: List<String>,
-        @JsonProperty(required = true)
-        val prepTime: Int,
-        @JsonProperty(required = true)
-        val cookTime: Int,
-        @JsonProperty(required = true)
-        val servings: Int,
+        @JsonProperty("name") val name: String,
+        @JsonProperty("description") val description: String,
+        @JsonProperty("ingredients") val ingredients: List<Ingredient>,
+        @JsonProperty("steps") val steps: List<Step>,
+        @JsonProperty("tags") val tags: List<String>,
+        @JsonProperty("prepTime") val prepTime: Int,
+        @JsonProperty("cookTime") val cookTime: Int,
+        @JsonProperty("servings") val servings: Int,
     )

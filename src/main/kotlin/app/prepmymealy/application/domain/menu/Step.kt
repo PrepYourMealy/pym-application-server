@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class Step
     @JsonCreator
     constructor(
-        @JsonProperty(required = true)
-        val description: String,
-        @JsonProperty(required = true)
-        val durationInMin: Int,
+        @JsonProperty("description") val description: String,
+        @JsonProperty("durationInMin") val durationInMin: Int,
     )
