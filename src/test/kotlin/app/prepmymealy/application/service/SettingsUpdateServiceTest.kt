@@ -1,23 +1,26 @@
 package app.prepmymealy.application.service
 
-import app.prepmymealy.application.domain.Settings
-import app.prepmymealy.application.domain.User
-import app.prepmymealy.application.domain.UserLimits
-import app.prepmymealy.application.domain.UserStats
+import app.prepmymealy.application.domain.settings.Settings
+import app.prepmymealy.application.domain.user.User
+import app.prepmymealy.application.domain.user.UserLimits
+import app.prepmymealy.application.domain.user.UserStats
 import app.prepmymealy.application.repository.SettingsRepository
 import app.prepmymealy.application.repository.UserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.*
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 import java.util.*
 
-@ExtendWith(MockitoExtension::class)
 class SettingsUpdateServiceTest {
     private val settingsRepository: SettingsRepository = mock()
     private val userRepository: UserRepository = mock()
     private val service = SettingsUpdateService(settingsRepository, userRepository)
+
+    @BeforeMethod
+    fun setUp() {
+        reset(settingsRepository, userRepository)
+    }
 
     @Test
     fun `should not update on no change`() {
@@ -57,14 +60,14 @@ class SettingsUpdateServiceTest {
         // given
         val id = "someId"
         val existingSettings = Settings(id = id, budget = 40L)
-        val update = Settings(id = id, budget = 40L, people = 2L)
+        val update = Settings(id = id, budget = 30L)
         whenever(settingsRepository.findById(eq(id))).thenReturn(Optional.of(existingSettings))
 
         // when
         val result = service.updateSettings(update)
 
         // then
-        val expectedSave = Settings(id = id, budget = 40L, people = 2L)
+        val expectedSave = Settings(id = id, budget = 30L)
         assertThat(result).isTrue()
         verify(settingsRepository).findById(id)
         verify(settingsRepository).save(expectedSave)
@@ -76,7 +79,7 @@ class SettingsUpdateServiceTest {
         // given
         val id = "someId"
         val existingSettings = Settings(id = id, budget = 40L)
-        val update = Settings(id = id, budget = 40L, people = 2L)
+        val update = Settings(id = id, budget = 40L)
         whenever(settingsRepository.findById(eq(id))).thenReturn(Optional.of(existingSettings))
 
         // when
@@ -92,7 +95,7 @@ class SettingsUpdateServiceTest {
     fun `should create settings and user stats on initial create`() {
         // given
         val id = "someId"
-        val update = Settings(id = id, budget = 40L, people = 2L)
+        val update = Settings(id = id, budget = 40L)
         whenever(settingsRepository.findById(eq(id))).thenReturn(Optional.empty())
         whenever(userRepository.findById(eq(id))).thenReturn(Optional.empty())
 
@@ -100,7 +103,7 @@ class SettingsUpdateServiceTest {
         val result = service.createSettings(update)
 
         // then
-        val expectedSettings = Settings(id = id, budget = 40L, people = 2L)
+        val expectedSettings = Settings(id = id, budget = 40L)
         val expectedUser = User(id = id, limits = UserLimits(regenerateRequestsPerWeek = 2), stats = UserStats(weeklyRegenerateRequest = 0))
         assertThat(result).isTrue()
         verify(settingsRepository).findById(eq(id))
@@ -114,7 +117,7 @@ class SettingsUpdateServiceTest {
     fun `should create settings but not user data if they already exist`() {
         // given
         val id = "someId"
-        val update = Settings(id = id, budget = 40L, people = 2L)
+        val update = Settings(id = id, budget = 40L)
         val user = User(id = id, limits = UserLimits(regenerateRequestsPerWeek = 2), stats = UserStats(weeklyRegenerateRequest = 0))
 
         whenever(settingsRepository.findById(eq(id))).thenReturn(Optional.empty())
@@ -124,7 +127,7 @@ class SettingsUpdateServiceTest {
         val result = service.createSettings(update)
 
         // then
-        val expectedSettings = Settings(id = id, budget = 40L, people = 2L)
+        val expectedSettings = Settings(id = id, budget = 40L)
         assertThat(result).isTrue()
         verify(settingsRepository).findById(eq(id))
         verify(settingsRepository).save(expectedSettings)

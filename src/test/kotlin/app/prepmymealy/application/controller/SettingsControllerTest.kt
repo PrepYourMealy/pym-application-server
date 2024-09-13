@@ -1,25 +1,24 @@
 package app.prepmymealy.application.controller
 
 import app.prepmymealy.application.converter.SettingsToSettingsRepresentationConverter
-import app.prepmymealy.application.domain.Settings
+import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.representation.SettingsRepresentation
 import app.prepmymealy.application.service.SettingsService
 import app.prepmymealy.application.service.SettingsUpdateService
 import app.prepmymealy.application.service.SettingsValidationService
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
 import org.springframework.http.HttpStatus
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 import java.util.*
 
-@ExtendWith(MockitoExtension::class)
 class SettingsControllerTest {
     private val converter: SettingsToSettingsRepresentationConverter = mock()
     private val service: SettingsService = mock()
@@ -29,6 +28,11 @@ class SettingsControllerTest {
     private val settingsRepresentationMock: SettingsRepresentation = mock()
 
     private var controller: SettingsController = SettingsController(service, converter, updateService, validationService)
+
+    @BeforeMethod
+    fun setUp() {
+        reset(service, converter, updateService, validationService, settingsMock, settingsRepresentationMock)
+    }
 
     @Test
     fun `should convert and send settings representation`() {

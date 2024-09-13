@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
@@ -38,7 +40,7 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.1.0")
     testImplementation("org.mockito:mockito-core:5.0.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("org.testng:testng:7.10.2")
 }
 
 dependencyManagement {
@@ -53,6 +55,31 @@ kotlin {
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+val unitTest by tasks.register<Test>("unitTest") {
+    description = "Runs unit tests"
+    filter {
+        excludeTestsMatching("app.prepmymealy.*.acceptance.*")
+        excludeTestsMatching("app.prepmymealy.*.repository.*")
+    }
+}
+
+val acceptanceTest by tasks.register<Test>("acceptanceTest") {
+    description = "Runs acceptance tests"
+    shouldRunAfter(unitTest)
+    filter {
+        includeTestsMatching("app.prepmymealy.*.acceptance.*")
+        includeTestsMatching("app.prepmymealy.*.repository.*")
+    }
+}
+
+tasks.withType<Test>().configureEach {
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+    }
+    outputs.upToDateWhen {
+        false
+    }
+    useTestNG {
+        useDefaultListeners = true
+    }
 }

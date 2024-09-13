@@ -1,6 +1,7 @@
 package app.prepmymealy.application.controller
 
-import app.prepmymealy.application.domain.Discount
+import app.prepmymealy.application.configuration.AppConfig
+import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.service.DiscountService
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(DiscountController.DISCOUNTS_PATH)
+@RequestMapping(AppConfig.API + AppConfig.API_VERSION + DiscountController.DISCOUNTS_PATH)
 class DiscountController(private val discountService: DiscountService) {
     companion object {
         const val DISCOUNTS_PATH = "/discounts"

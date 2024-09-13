@@ -1,31 +1,31 @@
 package app.prepmymealy.application.acceptance
 
-import app.prepmymealy.application.acceptance.api.ControllerApi
-import app.prepmymealy.application.domain.Discount
+import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.repository.DiscountRepository
+import app.prepmymealy.application.service.DiscountCacheService
 import app.prepmymealy.application.testsupport.AbstractSpringTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 
 class DiscountControllerAcceptanceTest : AbstractSpringTest() {
     @Autowired
-    private lateinit var api: ControllerApi
+    private lateinit var discountCacheService: DiscountCacheService
 
     @Autowired
     private lateinit var discountRepository: DiscountRepository
 
-    @BeforeEach
+    @BeforeMethod
     fun setUp() {
         discountRepository.deleteAll()
+        discountCacheService.reloadCache()
     }
 
     @Test
     fun `should return empty list when no discounts are available`() {
         // given
-
         // when
         val response = api.getDiscounts()
 

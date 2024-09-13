@@ -1,0 +1,79 @@
+name: CI & CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 21
+          cache: gradle
+      - name: Setup and execute Gradle 'build' task
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build -x test
+  unitTest:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 21
+          cache: gradle
+      - name: Setup and execute Gradle 'build' task
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: unitTest
+  acceptanceTest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 21
+          cache: gradle
+      - name: Setup and execute Gradle 'build' task
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: acceptanceTest
+  deploy:
+    runs-on: ubuntu-22.04
+    needs:
+      - acceptanceTest
+      - unitTest
+      - build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 21
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image with bootBuildImage
+        run: ./gradlew bootBuildImage --imageName=ghcr.io/${{ github.repository }}:prod
+
+      - name: Push Docker image to GitHub Container Registry
+        run: docker push ghcr.io/${{ github.repository }}:prod
+

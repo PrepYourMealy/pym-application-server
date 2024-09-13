@@ -1,9 +1,9 @@
 package app.prepmymealy.application.converter
 
-import app.prepmymealy.application.domain.Settings
+import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.representation.SettingsRepresentation
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.testng.annotations.Test
 
 class SettingsToSettingsRepresentationConverterTest {
     private val converter = SettingsToSettingsRepresentationConverter()
@@ -22,13 +22,13 @@ class SettingsToSettingsRepresentationConverterTest {
     @Test
     fun `should convert settings to settings representation`() {
         // given
-        val settings = Settings(id = "someId", budget = 20L, people = 2)
+        val settings = Settings(id = "someId", budget = 20L)
 
         // when
         val res = converter.convert(settings)
 
         // then
-        val expectedRepresentation = SettingsRepresentation(id = "someId", budget = 20L, people = 2)
+        val expectedRepresentation = SettingsRepresentation(id = "someId", budget = 20L)
         assertThat(res).isNotNull
         assertThat(res).isEqualTo(expectedRepresentation)
     }
