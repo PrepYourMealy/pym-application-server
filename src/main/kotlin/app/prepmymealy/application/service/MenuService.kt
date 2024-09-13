@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service
 @Service
 class MenuService(private val menuRepository: MenuRepository) {
     fun updateUserMenu(menu: Menu) = menuRepository.save(menu)
+
+    fun getMenuById(id: String) = menuRepository.findById(id)
 }

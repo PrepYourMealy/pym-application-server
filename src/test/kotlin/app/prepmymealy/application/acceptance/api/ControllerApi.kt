@@ -8,50 +8,44 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
-import org.springframework.http.client.ClientHttpResponse
 import org.springframework.stereotype.Component
-import org.springframework.web.client.ResponseErrorHandler
 import org.springframework.web.client.RestTemplate
 import java.util.Collections.singletonList
 
 @Component
 class ControllerApi {
-    class CustomResponseErrorHandler : ResponseErrorHandler {
-        override fun hasError(clientHttpResponse: ClientHttpResponse): Boolean {
-            return false
-        }
+    private var port: Int = 0
 
-        override fun handleError(clientHttpResponse: ClientHttpResponse) {
-        }
+    fun setPort(port: Int) {
+        this.port = port
     }
 
     @Autowired
     private lateinit var objectMapper: ObjectMapper
 
-    companion object {
-        private val REST_TEMPLATE: RestTemplate = RestTemplate()
-    }
+    @Autowired
+    private lateinit var restTemplate: RestTemplate
 
     @Value("\${base.url}")
     private lateinit var baseUrl: String
 
     fun recreateMenuForId(id: String): ResponseEntity<String> {
-        val url = "$baseUrl${AppConfig.API_VERSION}${MenuController.MENU_PATH}/$id"
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${MenuController.MENU_PATH}/$id"
         return putResponseEntity(url, "")
     }
 
     fun getDiscounts(): ResponseEntity<String> {
-        val url = "$baseUrl${AppConfig.API_VERSION}${DiscountController.DISCOUNTS_PATH}"
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${DiscountController.DISCOUNTS_PATH}"
         return getResponseEntity(url)
     }
 
     fun postDiscounts(discounts: List<Any>): ResponseEntity<String> {
-        val url = "$baseUrl${AppConfig.API_VERSION}${DiscountController.DISCOUNTS_PATH}"
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${DiscountController.DISCOUNTS_PATH}"
         return postResponseEntity(url, discounts)
     }
 
     fun getSettingsById(id: String): ResponseEntity<String> {
-        val url = "$baseUrl${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}/$id"
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}/$id"
         return getResponseEntity(url)
     }
 
@@ -59,28 +53,25 @@ class ControllerApi {
         id: String,
         body: Any,
     ): ResponseEntity<String> {
-        val url = "$baseUrl${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}/$id"
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}/$id"
         return putResponseEntity(url, body)
     }
 
     fun postSettings(body: Any): ResponseEntity<String> {
-        val url = "$baseUrl${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}"
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}"
         return postResponseEntity(url, body)
     }
 
     private fun getResponseEntity(url: String): ResponseEntity<String> {
-        REST_TEMPLATE.errorHandler = CustomResponseErrorHandler()
         val headers = HttpHeaders()
         headers.accept = singletonList(MediaType.APPLICATION_JSON)
-        return REST_TEMPLATE.exchange(url, HttpMethod.GET, HttpEntity<MediaType>(headers), String::class.java)
+        return restTemplate.exchange(url, HttpMethod.GET, HttpEntity<MediaType>(headers), String::class.java)
     }
 
     private fun putResponseEntity(
         url: String,
         requestBody: Any,
     ): ResponseEntity<String> {
-        REST_TEMPLATE.errorHandler = CustomResponseErrorHandler()
-
         // Initialize headers
         val headers =
             HttpHeaders().apply {
@@ -96,7 +87,7 @@ class ControllerApi {
         val httpEntity = HttpEntity(jsonBody, headers)
 
         // Execute the PUT request
-        return REST_TEMPLATE.exchange(
+        return restTemplate.exchange(
             url,
             HttpMethod.PUT,
             httpEntity,
@@ -108,8 +99,6 @@ class ControllerApi {
         url: String,
         requestBody: Any,
     ): ResponseEntity<String> {
-        REST_TEMPLATE.errorHandler = CustomResponseErrorHandler()
-
         val headers =
             HttpHeaders().apply {
                 contentType = MediaType.APPLICATION_JSON
@@ -119,8 +108,7 @@ class ControllerApi {
         val jsonBody = objectMapper.writeValueAsString(requestBody)
 
         val httpEntity = HttpEntity(jsonBody, headers)
-
-        return REST_TEMPLATE.exchange(
+        return restTemplate.exchange(
             url,
             HttpMethod.POST,
             httpEntity,

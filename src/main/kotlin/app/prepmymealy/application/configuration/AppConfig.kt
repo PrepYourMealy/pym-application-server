@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 class AppConfig {
     companion object {
         const val API_VERSION = "/v1"
+        const val API = "/api"
     }
 
     @Bean

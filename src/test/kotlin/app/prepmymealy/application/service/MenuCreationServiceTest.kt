@@ -9,16 +9,15 @@ import app.prepmymealy.application.domain.menu.ShoppingList
 import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.domain.user.User
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 import java.util.Optional
 
-@ExtendWith(MockitoExtension::class)
 class MenuCreationServiceTest {
     private val settingsService: SettingsService = mock()
     private val menuService: MenuService = mock()
@@ -33,6 +32,11 @@ class MenuCreationServiceTest {
     private val shoppingList: ShoppingList = mock()
     private val menu: Menu = mock()
     private val settings: Settings = mock()
+
+    @BeforeMethod
+    fun setUp() {
+        reset(settingsService, menuService, userService, shoppingListService, menuGenerationModel, menuConverter, listConverter)
+    }
 
     private val menuCreationService =
         MenuCreationService(

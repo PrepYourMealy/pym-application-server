@@ -3,7 +3,7 @@ package app.prepmymealy.application.service
 import app.prepmymealy.application.configuration.SettingsConfigurationProperties
 import app.prepmymealy.application.domain.settings.Settings
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.testng.annotations.Test
 
 class SettingsValidationServiceTest {
     private val settingLimits =

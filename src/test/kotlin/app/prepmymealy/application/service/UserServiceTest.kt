@@ -5,21 +5,25 @@ import app.prepmymealy.application.domain.user.UserLimits
 import app.prepmymealy.application.domain.user.UserStats
 import app.prepmymealy.application.repository.UserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.mock
-import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.eq
+import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 import java.util.Optional
 
-@ExtendWith(MockitoExtension::class)
 class UserServiceTest {
     private val userRepository: UserRepository = mock()
 
     private val userService = UserService(userRepository)
+
+    @BeforeMethod
+    fun setUp() {
+        reset(userRepository)
+    }
 
     @Test
     fun `should check if threshold is met`() {

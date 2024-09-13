@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.Objects
 
 @RestController
-@RequestMapping(AppConfig.API_VERSION + SettingsController.SETTINGS_PATH)
+@RequestMapping(AppConfig.API + AppConfig.API_VERSION + SettingsController.SETTINGS_PATH)
 class SettingsController(
     private val settingsService: SettingsService,
     private val converter: SettingsToSettingsRepresentationConverter,

@@ -1,27 +1,23 @@
 package app.prepmymealy.application.acceptance
 
-import app.prepmymealy.application.acceptance.api.ControllerApi
 import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.repository.SettingsRepository
 import app.prepmymealy.application.repository.UserRepository
 import app.prepmymealy.application.testsupport.AbstractSpringTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 
 class SettingsControllerAcceptanceTest : AbstractSpringTest() {
-    @Autowired
-    private lateinit var api: ControllerApi
-
     @Autowired
     private lateinit var settingsRepository: SettingsRepository
 
     @Autowired
     private lateinit var userRepository: UserRepository
 
-    @BeforeEach
+    @BeforeMethod
     fun setUp() {
         settingsRepository.deleteAll()
         userRepository.deleteAll()

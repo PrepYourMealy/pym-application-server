@@ -7,17 +7,20 @@ import app.prepmymealy.application.domain.user.UserStats
 import app.prepmymealy.application.repository.SettingsRepository
 import app.prepmymealy.application.repository.UserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.*
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 import java.util.*
 
-@ExtendWith(MockitoExtension::class)
 class SettingsUpdateServiceTest {
     private val settingsRepository: SettingsRepository = mock()
     private val userRepository: UserRepository = mock()
     private val service = SettingsUpdateService(settingsRepository, userRepository)
+
+    @BeforeMethod
+    fun setUp() {
+        reset(settingsRepository, userRepository)
+    }
 
     @Test
     fun `should not update on no change`() {

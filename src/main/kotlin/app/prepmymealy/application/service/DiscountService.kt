@@ -5,11 +5,15 @@ import app.prepmymealy.application.repository.DiscountRepository
 import org.springframework.stereotype.Service
 
 @Service
-class DiscountService(private val discountRepository: DiscountRepository) {
+class DiscountService(
+    private val discountRepository: DiscountRepository,
+    private val discountCacheService: DiscountCacheService,
+) {
     fun removeAndInsertDiscounts(discounts: List<Discount>) {
         discountRepository.deleteAll()
         discountRepository.saveAll(discounts)
+        discountCacheService.reloadCache()
     }
 
-    fun getAllDiscounts(): MutableList<Discount> = discountRepository.findAll()
+    fun getAllDiscounts(): List<Discount> = discountCacheService.getCachedDiscounts()
 }

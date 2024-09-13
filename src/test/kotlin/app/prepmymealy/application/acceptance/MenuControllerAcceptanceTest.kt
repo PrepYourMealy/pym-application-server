@@ -1,6 +1,5 @@
 package app.prepmymealy.application.acceptance
 
-import app.prepmymealy.application.acceptance.api.ControllerApi
 import app.prepmymealy.application.domain.user.User
 import app.prepmymealy.application.domain.user.UserLimits
 import app.prepmymealy.application.domain.user.UserStats
@@ -8,14 +7,12 @@ import app.prepmymealy.application.repository.MenuRepository
 import app.prepmymealy.application.repository.SettingsRepository
 import app.prepmymealy.application.repository.ShoppingListRepository
 import app.prepmymealy.application.repository.UserRepository
-import app.prepmymealy.application.service.UserInitializationService
 import app.prepmymealy.application.testsupport.AbstractSpringTest
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito.mock
+import org.mockito.kotlin.reset
 import org.mockito.kotlin.whenever
 import org.springframework.ai.chat.messages.AssistantMessage
 import org.springframework.ai.chat.model.ChatResponse
@@ -25,11 +22,10 @@ import org.springframework.ai.openai.OpenAiChatModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.HttpStatus
+import org.testng.annotations.BeforeMethod
+import org.testng.annotations.Test
 
 class MenuControllerAcceptanceTest : AbstractSpringTest() {
-    @Autowired
-    private lateinit var api: ControllerApi
-
     @Autowired
     private lateinit var userRepository: UserRepository
 
@@ -51,8 +47,9 @@ class MenuControllerAcceptanceTest : AbstractSpringTest() {
 
     private val message: AssistantMessage = mock(AssistantMessage::class.java)
 
-    @BeforeEach
+    @BeforeMethod
     fun setUp() {
+        reset(openAiChatModel, chatResponse, generation, message)
         userRepository.deleteAll()
         settingsRepository.deleteAll()
         menuRepository.deleteAll()
@@ -134,7 +131,7 @@ class MenuControllerAcceptanceTest : AbstractSpringTest() {
         assertThat(settings).isNotNull
     }
 
-    @Test
+    @Test(priority = 1)
     fun `should not recreate menu when limit is reached`() {
         // given
         val userId = "user_1231njaskdjnasd"

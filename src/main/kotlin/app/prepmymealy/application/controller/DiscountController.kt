@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(AppConfig.API_VERSION + DiscountController.DISCOUNTS_PATH)
+@RequestMapping(AppConfig.API + AppConfig.API_VERSION + DiscountController.DISCOUNTS_PATH)
 class DiscountController(private val discountService: DiscountService) {
     companion object {
         const val DISCOUNTS_PATH = "/discounts"
