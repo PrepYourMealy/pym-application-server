@@ -1,5 +1,9 @@
 package app.prepmymealy.application.acceptance.api
 
+import app.prepmymealy.application.configuration.AppConfig
+import app.prepmymealy.application.controller.DiscountController
+import app.prepmymealy.application.controller.MenuController
+import app.prepmymealy.application.controller.SettingsController
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -31,18 +35,23 @@ class ControllerApi {
     @Value("\${base.url}")
     private lateinit var baseUrl: String
 
+    fun recreateMenuForId(id: String): ResponseEntity<String> {
+        val url = "$baseUrl${AppConfig.API_VERSION}${MenuController.MENU_PATH}/$id"
+        return putResponseEntity(url, "")
+    }
+
     fun getDiscounts(): ResponseEntity<String> {
-        val url = "$baseUrl/discounts"
+        val url = "$baseUrl${AppConfig.API_VERSION}${DiscountController.DISCOUNTS_PATH}"
         return getResponseEntity(url)
     }
 
     fun postDiscounts(discounts: List<Any>): ResponseEntity<String> {
-        val url = "$baseUrl/discounts"
+        val url = "$baseUrl${AppConfig.API_VERSION}${DiscountController.DISCOUNTS_PATH}"
         return postResponseEntity(url, discounts)
     }
 
     fun getSettingsById(id: String): ResponseEntity<String> {
-        val url = "$baseUrl/settings/$id"
+        val url = "$baseUrl${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}/$id"
         return getResponseEntity(url)
     }
 
@@ -50,12 +59,12 @@ class ControllerApi {
         id: String,
         body: Any,
     ): ResponseEntity<String> {
-        val url = "$baseUrl/settings/$id"
+        val url = "$baseUrl${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}/$id"
         return putResponseEntity(url, body)
     }
 
     fun postSettings(body: Any): ResponseEntity<String> {
-        val url = "$baseUrl/settings"
+        val url = "$baseUrl${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}"
         return postResponseEntity(url, body)
     }
 

@@ -6,6 +6,7 @@ import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.service.DiscountService
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.ai.chat.model.ChatResponse
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.ai.openai.OpenAiChatModel
 import org.springframework.ai.openai.OpenAiChatOptions
@@ -31,9 +32,8 @@ class MenuGenerationModel(
             discountCache = discountService.getAllDiscounts()
         }
         val prompt = generatePrompt(settings)
-        val response = openAiChatModel.call(prompt)
+        val response: ChatResponse = openAiChatModel.call(prompt)
         val content = response.result.output.content
-        println(content)
         return objectMapper.readValue(content, MenuResponse::class.java)
     }
 

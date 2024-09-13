@@ -66,4 +66,6 @@ class UserService(private val userRepository: UserRepository) {
         // TODO: maybe add default here as well
         return user.limits!!.regenerateRequestsPerWeek > user.stats!!.weeklyRegenerateRequest
     }
+
+    fun createUser(user: User) = userRepository.save(user)
 }
