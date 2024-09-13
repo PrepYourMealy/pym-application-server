@@ -150,7 +150,6 @@ class MenuCreationServiceTest {
         menuCreationService.createAllUserMenus()
 
         // then
-        verify(menuGenerationModel).reloadDiscountCache()
         verify(settingsService).getAllSettingsAsStream()
         verify(menuGenerationModel).generateMenu(settings)
         verify(listConverter).convert(menuResponse, settings.id)

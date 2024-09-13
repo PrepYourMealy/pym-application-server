@@ -2,7 +2,6 @@ package app.prepmymealy.application.ai.model
 
 import app.prepmymealy.application.ai.response.MenuResponse
 import app.prepmymealy.application.ai.service.OutputDeterminationService
-import app.prepmymealy.application.domain.discount.Discount
 import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.service.DiscountService
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -21,16 +20,7 @@ class MenuGenerationModel(
     private val discountService: DiscountService,
     private val openAiChatModel: OpenAiChatModel,
 ) {
-    private var discountCache: List<Discount>? = null
-
-    fun reloadDiscountCache() {
-        discountCache = discountService.getAllDiscounts()
-    }
-
     fun generateMenu(settings: Settings): MenuResponse {
-        if (settings.includeDiscounts == true && discountCache == null) {
-            discountCache = discountService.getAllDiscounts()
-        }
         val prompt = generatePrompt(settings)
         val response: ChatResponse = openAiChatModel.call(prompt)
         val content = response.result.output.content
@@ -85,12 +75,20 @@ class MenuGenerationModel(
         if (!settings.kitchenEquipment.isNullOrEmpty()) {
             prompt += "Folgendes Küchenequipment ist vorhanden: ${settings.kitchenEquipment.joinToString(", ")}. Suche nach Gerichten die mit diesem Equipment zubereitet werden können."
         }
+        if (settings.includeDiscounts != null && settings.includeDiscounts) {
+            prompt += "Es sollten auch Gerichte dabei sein, die mit den aktuellen Rabatten kompatibel sind. Die Rabatte sind: ${
+                discountService.getAllDiscounts().joinToString(
+                    ", ",
+                )
+            }."
+        }
         prompt +=
             """
             Auf der Einkaufsliste soll jede Zutat vorkommen, die für die Zubereitung der Gerichte benötigt wird. Keine Sammelbegriffe,
             wie Sonsitges oder etwas in der Art. Alles muss drauf stehen, dass in den Rezepten verwendet wird und jede Zutat soll nur einmal drauf
             stehen, wenn sie öfter benutzt wird muss die Menge auf der List angepasst werden. Außerdem sollte bei der Portionsgröße pro Person pro Gericht darauf geachtet werden,
             dass es genug Nährstoffe enthält um die gesamten Personen satt zu machen. Achte darauf, dass auch Beilagen für die Gerichte dabei sind, welche sonst keine hätten. Sonst sind zu wenige Kohlenhydrate in den Gerichten.
+            Hier ist die Aufstellung der Personen und der Gerichte für diese Woche: ${settings.toPrompt()}
             """.trimIndent()
         return prompt
     }

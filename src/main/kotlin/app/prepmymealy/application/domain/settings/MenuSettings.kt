@@ -8,6 +8,8 @@ data class MenuSettings(
         fun builder() = Builder()
     }
 
+    fun toPrompt() = " sollte für $people Personen sein. Bitte brücksichtige das in den Mengen angaben und Rezepten."
+
     fun toBuilder() = Builder(isActive, people)
 
     data class Builder(

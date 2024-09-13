@@ -22,6 +22,10 @@ data class Discount(
         fun builder() = Builder()
     }
 
+    override fun toString(): String {
+        return "Discount(name=$name, description=$description, price=$price, originalPrice=$originalPrice, discount=$discount, packaging=$packaging, availability=$availability, dataOrigin=$dataOrigin)"
+    }
+
     fun toBuilder() =
         Builder(
             id,

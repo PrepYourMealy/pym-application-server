@@ -47,11 +47,6 @@ class OutputDeterminationService {
         val dayMenuSchema = JSONObject()
         dayMenuSchema.put("type", "object")
         val properties = JSONObject()
-        settings?.overall?.let {
-            properties.put("breakfast", generateRecipeRef())
-            properties.put("lunch", generateRecipeRef())
-            properties.put("dinner", generateRecipeRef())
-        }
         settings?.breakfast?.let {
             if (it.isActive) {
                 properties.put("breakfast", generateRecipeRef())

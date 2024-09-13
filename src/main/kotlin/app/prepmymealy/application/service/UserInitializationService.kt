@@ -38,7 +38,19 @@ class UserInitializationService(
                     ReducedWeeklySettings.builder()
                         .overall(
                             DailySettings.builder()
-                                .overall(
+                                .breakfast(
+                                    MenuSettings.builder()
+                                        .isActive(true)
+                                        .people(2)
+                                        .build(),
+                                )
+                                .lunch(
+                                    MenuSettings.builder()
+                                        .isActive(true)
+                                        .people(2)
+                                        .build(),
+                                )
+                                .dinner(
                                     MenuSettings.builder()
                                         .isActive(true)
                                         .people(2)

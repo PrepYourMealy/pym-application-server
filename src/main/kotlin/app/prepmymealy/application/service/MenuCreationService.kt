@@ -20,7 +20,6 @@ class MenuCreationService(
     @Scheduled(cron = "0 0 10 * * Mon")
     fun createAllUserMenus() {
         // to seed with the current discounts
-        menuGenerationModel.reloadDiscountCache()
         settingsService.getAllSettingsAsStream()
             .parallel()
             .map {

@@ -7,6 +7,10 @@ data class ReducedWeeklySettings(
         fun builder() = Builder()
     }
 
+    fun toPrompt(): String {
+        return "Diese Woche sollte jeden Tag folgende Anzahl an Mahlzeiten und Personen pro Mahlzeit haben: ${overall?.toPrompt()}"
+    }
+
     fun toBuilder() = Builder(overall)
 
     data class Builder(

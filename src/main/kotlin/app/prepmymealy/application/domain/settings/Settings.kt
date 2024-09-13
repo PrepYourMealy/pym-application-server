@@ -25,6 +25,13 @@ data class Settings
             fun builder(id: String) = Builder(id)
         }
 
+        fun toPrompt(): String {
+            if (weeklySettings != null) {
+                return weeklySettings.toPrompt()
+            }
+            return overallWeeklySettings!!.toPrompt()
+        }
+
         fun toBuilder() =
             Builder(
                 id,
