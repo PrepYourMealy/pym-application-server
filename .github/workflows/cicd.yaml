@@ -69,8 +69,8 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build Docker image with bootBuildImage
-        run: ./gradlew bootBuildImage --imageName=ghcr.io/${{ github.repository }}:prod
+        run: ./gradlew bootBuildImage --imageName=ghcr.io/prepyourmealy/pym-application-server:prod
 
       - name: Push Docker image to GitHub Container Registry
-        run: docker push ghcr.io/${{ github.repository }}:prod
+        run: docker push ghcr.io/prepyourmealy/pym-application-server:prod
 
