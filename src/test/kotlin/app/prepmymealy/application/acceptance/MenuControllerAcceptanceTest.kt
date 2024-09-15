@@ -71,6 +71,9 @@ class MenuControllerAcceptanceTest : AbstractSpringTest() {
 
         // then
         assertThat(result.statusCode).isEqualTo(HttpStatus.OK)
+        await(timeoutMillis = 3000L) {
+            menuRepository.findById(userId).isPresent
+        }
 
         val user = userRepository.findById(userId).get()
         assertThat(user.limits).isNotNull
@@ -116,7 +119,9 @@ class MenuControllerAcceptanceTest : AbstractSpringTest() {
 
         // then
         assertThat(result.statusCode).isEqualTo(HttpStatus.OK)
-
+        await(timeoutMillis = 3000L) {
+            menuRepository.findById(userId).isPresent
+        }
         val user = userRepository.findById(userId).get()
         assertThat(user.limits).isNotNull
         assertThat(user.stats!!.weeklyRegenerateRequest).isEqualTo(2)

@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests
 import org.testng.annotations.BeforeClass
 import java.nio.charset.StandardCharsets
+import kotlin.test.fail
 
 @SpringBootTest(
     classes = [Server::class, TestConfiguration::class],
@@ -30,5 +31,16 @@ abstract class AbstractSpringTest : AbstractTestNGSpringContextTests() {
     fun loadResourceAsString(resourcePath: String): String {
         return object {}.javaClass.getResourceAsStream(resourcePath)?.bufferedReader(StandardCharsets.UTF_8)?.use { it.readText() }
             ?: throw IllegalArgumentException("Resource not found: $resourcePath")
+    }
+
+    fun await(timeoutMillis: Long, pollIntervalMillis: Long = 100, condition: () -> Boolean) {
+        val timeout = System.currentTimeMillis() + timeoutMillis
+        while (System.currentTimeMillis() < timeout) {
+            if (condition()) {
+                return // Condition met, exit the function
+            }
+            Thread.sleep(pollIntervalMillis) // Wait before checking again
+        }
+        fail("Condition was not met within $timeoutMillis milliseconds")
     }
 }

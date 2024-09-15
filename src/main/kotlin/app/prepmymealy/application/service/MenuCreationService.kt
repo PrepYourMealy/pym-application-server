@@ -3,6 +3,7 @@ package app.prepmymealy.application.service
 import app.prepmymealy.application.ai.model.MenuGenerationModel
 import app.prepmymealy.application.converter.MenuResponseToMenuConverter
 import app.prepmymealy.application.converter.MenuResponseToShoppingListConverter
+import org.springframework.scheduling.annotation.Async
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import reactor.util.function.Tuples
@@ -33,17 +34,18 @@ class MenuCreationService(
             }
     }
 
-    fun recreateMenuForUser(userId: String): Boolean {
+    @Async
+    fun recreateMenuForUser(userId: String) {
         val user = userService.getUserById(userId)
         if (user.isEmpty) {
-            return false
+            return
         }
         if (!userService.isUserAllowedToRecreateMenu(user.get())) {
-            return false
+            return
         }
         val settings = settingsService.getSettingsById(userId)
         if (settings.isEmpty) {
-            return false
+            return
         }
         val menuResponse = menuGenerationModel.generateMenu(settings.get())
         val list = listConverter.convert(menuResponse, userId)
@@ -51,6 +53,5 @@ class MenuCreationService(
         menuService.updateUserMenu(menu)
         shoppingListService.updateShoppingList(list)
         userService.incrementUserRegenerateRequestAndSave(user.get())
-        return true
     }
 }

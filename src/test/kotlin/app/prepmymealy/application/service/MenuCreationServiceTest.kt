@@ -57,10 +57,9 @@ class MenuCreationServiceTest {
         whenever(userService.getUserById(userId)).thenReturn(Optional.empty())
 
         // when
-        val result = menuCreationService.recreateMenuForUser(userId)
+        menuCreationService.recreateMenuForUser(userId)
 
         // then
-        assertThat(result).isFalse()
         verify(userService).getUserById(userId)
         verifyNoMoreInteractions(userService, menuService, shoppingListService)
     }
@@ -74,10 +73,9 @@ class MenuCreationServiceTest {
         whenever(userService.isUserAllowedToRecreateMenu(user)).thenReturn(false)
 
         // when
-        val result = menuCreationService.recreateMenuForUser(userId)
+        menuCreationService.recreateMenuForUser(userId)
 
         // then
-        assertThat(result).isFalse()
         verify(userService).getUserById(userId)
         verify(userService).isUserAllowedToRecreateMenu(user)
         verifyNoMoreInteractions(userService, menuService, shoppingListService)
@@ -92,10 +90,9 @@ class MenuCreationServiceTest {
         whenever(settingsService.getSettingsById(userId)).thenReturn(Optional.empty())
 
         // when
-        val result = menuCreationService.recreateMenuForUser(userId)
+        menuCreationService.recreateMenuForUser(userId)
 
         // then
-        assertThat(result).isFalse()
         verify(userService).getUserById(userId)
         verify(userService).isUserAllowedToRecreateMenu(user)
         verify(settingsService).getSettingsById(userId)
@@ -114,10 +111,9 @@ class MenuCreationServiceTest {
         whenever(menuConverter.convert(menuResponse, userId)).thenReturn(menu)
 
         // when
-        val result = menuCreationService.recreateMenuForUser(userId)
+        menuCreationService.recreateMenuForUser(userId)
 
         // then
-        assertThat(result).isTrue()
         verify(userService).getUserById(userId)
         verify(userService).isUserAllowedToRecreateMenu(user)
         verify(settingsService).getSettingsById(userId)

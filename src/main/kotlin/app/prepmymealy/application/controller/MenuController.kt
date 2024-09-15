@@ -6,6 +6,7 @@ import app.prepmymealy.application.representation.ApiErrorRepresentation
 import app.prepmymealy.application.service.MenuCreationService
 import app.prepmymealy.application.service.MenuService
 import app.prepmymealy.application.service.UserInitializationService
+import app.prepmymealy.application.service.UserService
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 class MenuController(
     private val menuCreationService: MenuCreationService,
     private val userInitializationService: UserInitializationService,
+    private val userService: UserService,
     private val menuService: MenuService,
     private val converter: MenuToMenuRepresentationConverter,
 ) {
@@ -30,17 +32,17 @@ class MenuController(
     fun recreateMenu(
         @PathVariable id: String,
     ): ResponseEntity<Any> {
-        userInitializationService.initializeUser(id) // TODO: maybe make this better
-        val result = menuCreationService.recreateMenuForUser(id)
-        if (result) {
-            return ResponseEntity.ok().build()
+        userInitializationService.initializeUser(id)
+        if (!userService.isUserAllowedToRecreateMenu(id)) {
+            val apiError =
+                ApiErrorRepresentation(
+                    message = "User not allowed to recreate menu: $id",
+                    code = 403,
+                )
+            return ResponseEntity.status(403).body(apiError)
         }
-        val apiError =
-            ApiErrorRepresentation(
-                message = "Limit exceeded for user: $id",
-                code = 403,
-            )
-        return ResponseEntity.status(403).body(apiError)
+        menuCreationService.recreateMenuForUser(id)
+        return ResponseEntity.ok().build()
     }
 
     @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
