@@ -6,6 +6,7 @@ import app.prepmymealy.application.representation.SettingsRepresentation
 import app.prepmymealy.application.service.SettingsService
 import app.prepmymealy.application.service.SettingsUpdateService
 import app.prepmymealy.application.service.SettingsValidationService
+import app.prepmymealy.application.service.UserInitializationService
 import org.assertj.core.api.Assertions.assertThat
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -23,11 +24,12 @@ class SettingsControllerTest {
     private val converter: SettingsToSettingsRepresentationConverter = mock()
     private val service: SettingsService = mock()
     private val updateService: SettingsUpdateService = mock()
+    private val userInitializationService: UserInitializationService = mock()
     private val validationService: SettingsValidationService = mock()
     private val settingsMock: Settings = mock()
     private val settingsRepresentationMock: SettingsRepresentation = mock()
 
-    private var controller: SettingsController = SettingsController(service, converter, updateService, validationService)
+    private var controller: SettingsController = SettingsController(service, converter, userInitializationService, updateService, validationService)
 
     @BeforeMethod
     fun setUp() {

@@ -7,6 +7,7 @@ import app.prepmymealy.application.representation.ApiErrorRepresentation
 import app.prepmymealy.application.service.SettingsService
 import app.prepmymealy.application.service.SettingsUpdateService
 import app.prepmymealy.application.service.SettingsValidationService
+import app.prepmymealy.application.service.UserInitializationService
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -24,6 +25,7 @@ import java.util.Objects
 class SettingsController(
     private val settingsService: SettingsService,
     private val converter: SettingsToSettingsRepresentationConverter,
+    private val userInitializationService: UserInitializationService,
     private val settingsUpdateService: SettingsUpdateService,
     private val validationService: SettingsValidationService,
 ) {
@@ -47,6 +49,12 @@ class SettingsController(
                 )
             ResponseEntity.status(404).body(apiError)
         }
+    }
+
+    @PostMapping("/init/{id}")
+    fun initSettings(@PathVariable id: String): ResponseEntity<Any> {
+        userInitializationService.initializeUser(id)
+        return ResponseEntity.ok().build()
     }
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
