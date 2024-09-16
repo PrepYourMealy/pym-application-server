@@ -12,10 +12,6 @@ import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @Configuration
-@EnableScheduling
-@EnableConfigurationProperties
-@ConfigurationPropertiesScan
-@EnableAsync
 class AppConfig {
     companion object {
         const val API_VERSION = "/v1"
