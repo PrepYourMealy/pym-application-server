@@ -2,6 +2,7 @@ package app.prepmymealy.application.ai.model
 
 import app.prepmymealy.application.ai.response.MenuResponse
 import app.prepmymealy.application.ai.service.OutputDeterminationService
+import app.prepmymealy.application.domain.menu.Menu
 import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.service.DiscountService
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -27,6 +28,24 @@ class MenuGenerationModel(
         return objectMapper.readValue(content, MenuResponse::class.java)
     }
 
+    fun recreateMenuWithPrompt(prompt: String, settings: Settings, existingMenu: Menu?): MenuResponse {
+        val newPrompt = Prompt(
+            generatePromptText(settings, prompt, existingMenu),
+            OpenAiChatOptions.builder()
+                .withModel(OpenAiApi.ChatModel.GPT_4_O_MINI)
+                .withResponseFormat(
+                    ResponseFormat(
+                        ResponseFormat.Type.JSON_SCHEMA,
+                        outputDeterminationService.generateSchemaForSettings(settings).toString(),
+                    ),
+                )
+                .build(),
+        )
+        val response: ChatResponse = openAiChatModel.call(newPrompt)
+        val content = response.result.output.content
+        return objectMapper.readValue(content, MenuResponse::class.java)
+    }
+
     private fun generatePrompt(settings: Settings): Prompt {
         val prompt =
             Prompt(
@@ -44,7 +63,7 @@ class MenuGenerationModel(
         return prompt
     }
 
-    private fun generatePromptText(settings: Settings): String {
+    private fun generatePromptText(settings: Settings, userPrompt: String? = null, existingMenu: Menu? = null): String {
         var prompt =
             """
             Erstelle ein Menü für eine Woche. Die Zutaten sollten frisch und gesund sein. Die Gerichte sollten einfach zuzubereiten sein und nicht zu lange dauern. Wichtig ist, dass jedes Gericht ein 
@@ -90,6 +109,15 @@ class MenuGenerationModel(
             dass es genug Nährstoffe enthält um die gesamten Personen satt zu machen. Achte darauf, dass auch Beilagen für die Gerichte dabei sind, welche sonst keine hätten. Sonst sind zu wenige Kohlenhydrate in den Gerichten.
             Hier ist die Aufstellung der Personen und der Gerichte für diese Woche: ${settings.toPrompt()}
             """.trimIndent()
+        if (userPrompt != null) {
+            prompt += """ Diese Anweisungen hat der Nutzer geben andessen du das Menu anpassen solltest. 
+                Sollten im Nutzertext Dinge stehen die mit der bisherigen Anweisung nicht uebereinstimmen dann ist der
+                Text des Nutzers relevanter: $userPrompt
+            """.trimIndent()
+        }
+        if (existingMenu != null) {
+            prompt += """ Hier ist das bisherige Menu: ${objectMapper.writeValueAsString(existingMenu)}."""
+        }
         return prompt
     }
 }

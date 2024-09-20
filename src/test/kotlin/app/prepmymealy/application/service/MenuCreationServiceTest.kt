@@ -8,7 +8,6 @@ import app.prepmymealy.application.domain.menu.Menu
 import app.prepmymealy.application.domain.menu.ShoppingList
 import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.domain.user.User
-import org.assertj.core.api.Assertions.assertThat
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.reset
 import org.mockito.kotlin.verify
@@ -17,6 +16,7 @@ import org.mockito.kotlin.whenever
 import org.testng.annotations.BeforeMethod
 import org.testng.annotations.Test
 import java.util.Optional
+import org.mockito.kotlin.times
 
 class MenuCreationServiceTest {
     private val settingsService: SettingsService = mock()
@@ -109,6 +109,7 @@ class MenuCreationServiceTest {
         whenever(menuGenerationModel.generateMenu(settings)).thenReturn(menuResponse)
         whenever(listConverter.convert(menuResponse, userId)).thenReturn(shoppingList)
         whenever(menuConverter.convert(menuResponse, userId)).thenReturn(menu)
+        whenever(user.id).thenReturn(userId)
 
         // when
         menuCreationService.recreateMenuForUser(userId)
@@ -123,6 +124,7 @@ class MenuCreationServiceTest {
         verify(menuService).updateUserMenu(menu)
         verify(shoppingListService).updateShoppingList(shoppingList)
         verify(userService).incrementUserRegenerateRequestAndSave(user)
+        verify(user, times(2)).id
         verifyNoMoreInteractions(
             userService,
             menuService,
