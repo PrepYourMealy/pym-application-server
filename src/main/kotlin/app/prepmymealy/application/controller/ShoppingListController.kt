@@ -1,6 +1,7 @@
 package app.prepmymealy.application.controller
 
 import app.prepmymealy.application.configuration.AppConfig
+import app.prepmymealy.application.controller.payload.ShoppingListPayload
 import app.prepmymealy.application.converter.ShoppingListToShoppingListRepresentationConverter
 import app.prepmymealy.application.extractor.ShoppingListExtractor
 import app.prepmymealy.application.representation.ApiErrorRepresentation
@@ -42,10 +43,10 @@ class ShoppingListController(
         }
     }
 
-    @PutMapping("/{id}", produces = ["application/json"])
+    @PutMapping("/{id}", consumes = ["application/json"])
     fun updateShoppingList(
         @PathVariable id: String,
-        @RequestBody shoppingListRepresentation: ShoppingListRepresentation,
+        @RequestBody shoppingListRepresentation: ShoppingListPayload,
     ): ResponseEntity<Any> {
         // TODO maybe make this update safer
         val shoppingList = extractor.extract(shoppingListRepresentation, id)

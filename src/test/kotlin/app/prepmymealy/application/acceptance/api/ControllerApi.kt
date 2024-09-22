@@ -4,6 +4,7 @@ import app.prepmymealy.application.configuration.AppConfig
 import app.prepmymealy.application.controller.DiscountController
 import app.prepmymealy.application.controller.MenuController
 import app.prepmymealy.application.controller.SettingsController
+import app.prepmymealy.application.controller.ShoppingListController
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -60,6 +61,19 @@ class ControllerApi {
     fun postSettings(body: Any): ResponseEntity<String> {
         val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${SettingsController.SETTINGS_PATH}"
         return postResponseEntity(url, body)
+    }
+
+    fun getListById(id: String): ResponseEntity<String> {
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${ShoppingListController.LIST_PATH}/$id"
+        return getResponseEntity(url)
+    }
+
+    fun putList(
+        id: String,
+        body: Any,
+    ): ResponseEntity<String> {
+        val url = "$baseUrl${port}${AppConfig.API}${AppConfig.API_VERSION}${ShoppingListController.LIST_PATH}/$id"
+        return putResponseEntity(url, body)
     }
 
     private fun getResponseEntity(url: String): ResponseEntity<String> {

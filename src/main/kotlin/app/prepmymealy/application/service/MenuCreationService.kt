@@ -24,7 +24,7 @@ class MenuCreationService(
     private val menuConverter: MenuResponseToMenuConverter,
     private val listConverter: MenuResponseToShoppingListConverter,
 ) {
-    @Scheduled(cron = "0 0 10 * * Mon")
+    @Scheduled(cron = "0 0 3 * * Mon")
     fun createAllUserMenus() {
         // to seed with the current discounts
         settingsService.getAllSettingsAsStream()
