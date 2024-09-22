@@ -11,4 +11,5 @@ data class ShoppingListItem
         @JsonProperty("quantity") val quantity: Int,
         @JsonProperty("unit") val unit: String,
         @JsonProperty("origin") val origin: String,
+        @JsonProperty("bought") val bought: Boolean = false,
     )

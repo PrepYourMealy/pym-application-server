@@ -1,4 +1,4 @@
-package app.prepmymealy.application.converter
+package app.prepmymealy.application.extractor
 
 import app.prepmymealy.application.domain.menu.ShoppingList
 import app.prepmymealy.application.domain.menu.ShoppingListItem
@@ -7,16 +7,16 @@ import app.prepmymealy.application.representation.ShoppingListRepresentation
 import org.springframework.stereotype.Component
 
 @Component
-class ShoppingListToShoppingListRepresentationConverter : Converter<ShoppingList, ShoppingListRepresentation> {
-    override fun convert(input: ShoppingList): ShoppingListRepresentation {
-        return ShoppingListRepresentation(
-            total = input.list.sumOf { it.price },
-            items = input.list.map { convertShoppingListItem(it) },
+class ShoppingListExtractor : Extractor<ShoppingListRepresentation, ShoppingList> {
+    override fun extract(input: ShoppingListRepresentation, id: String): ShoppingList {
+        return ShoppingList(
+            id = id,
+            list = input.items.map { convertShoppingListItem(it) },
         )
     }
 
-    private fun convertShoppingListItem(item: ShoppingListItem): ShoppingListItemRepresentation {
-        return ShoppingListItemRepresentation(
+    private fun convertShoppingListItem(item: ShoppingListItemRepresentation): ShoppingListItem {
+        return ShoppingListItem(
             name = item.name,
             quantity = item.quantity,
             unit = item.unit,

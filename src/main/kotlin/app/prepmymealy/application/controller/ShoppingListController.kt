@@ -2,11 +2,15 @@ package app.prepmymealy.application.controller
 
 import app.prepmymealy.application.configuration.AppConfig
 import app.prepmymealy.application.converter.ShoppingListToShoppingListRepresentationConverter
+import app.prepmymealy.application.extractor.ShoppingListExtractor
 import app.prepmymealy.application.representation.ApiErrorRepresentation
+import app.prepmymealy.application.representation.ShoppingListRepresentation
 import app.prepmymealy.application.service.ShoppingListService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 class ShoppingListController(
     private val shoppingListService: ShoppingListService,
     private val converter: ShoppingListToShoppingListRepresentationConverter,
+    private val extractor: ShoppingListExtractor,
 ) {
     companion object {
         const val LIST_PATH = "/lists"
@@ -35,5 +40,16 @@ class ShoppingListController(
                 )
             ResponseEntity.status(404).body(apiError)
         }
+    }
+
+    @PutMapping("/{id}", produces = ["application/json"])
+    fun updateShoppingList(
+        @PathVariable id: String,
+        @RequestBody shoppingListRepresentation: ShoppingListRepresentation,
+    ): ResponseEntity<Any> {
+        // TODO maybe make this update safer
+        val shoppingList = extractor.extract(shoppingListRepresentation, id)
+        shoppingListService.updateShoppingList(shoppingList)
+        return ResponseEntity.ok().build()
     }
 }

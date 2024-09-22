@@ -6,4 +6,5 @@ data class ShoppingListItemRepresentation(
     val quantity: Int,
     val unit: String,
     val origin: String,
+    val bought: Boolean,
 )
