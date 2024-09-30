@@ -1,10 +1,8 @@
 package app.prepmymealy.application.ai.model
 
-import app.prepmymealy.application.ai.response.MenuResponse
 import app.prepmymealy.application.ai.response.ShoppingListResponse
 import app.prepmymealy.application.ai.service.OutputDeterminationService
 import app.prepmymealy.application.domain.menu.Menu
-import app.prepmymealy.application.domain.settings.Settings
 import app.prepmymealy.application.service.DiscountService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.ai.chat.model.ChatResponse
