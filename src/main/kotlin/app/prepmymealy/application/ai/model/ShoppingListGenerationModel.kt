@@ -53,7 +53,9 @@ class ShoppingListGenerationModel(
             so akkurat wie möglich sind. Hier ist das Wochenmenü: ${objectMapper.writeValueAsString(menu)}. Hier sind die Discounts und wo sie 
             zu bekommen sind: ${objectMapper.writeValueAsString(discountService.getAllDiscounts())}. Es muss wirklich jede Zutat aufgelistet sein,
             welche für die Zubereitung der Gerichte benötigt wird. Bei Zutaten, die du nicht in den Discounts findest, musst du einen realistischen
-            Preis schätzen.
+            Preis schätzen. Achte darauf, dass keine Anteile von Zutaten gekauft werden kann. Wenn du eine Zutat in den Discounts findest musst du immer den
+            ganzen Preis einrechnen und nicht den Anteil der benötigt wird. Und bei Zutaten, welche du nicht in den Discounts findest, musst du den Preis
+            sehr genau schätzen. Am besten orientierst du dich bei der Schätzung an den Preisen, die du in den Dsicounts findest.
         """.trimIndent()
     }
 }
