@@ -61,9 +61,10 @@ class MenuCreationService(
             return
         }
         val (user, settings) = validationResult.get()
+        val updatedUser = userService.updateUserStatus(user)
         val existingMenu = menuService.getMenuById(userId)
         val menuResponse = menuGenerationModel.recreateMenuWithPrompt(userPrompt, settings, existingMenu.orElse(null))
-        updateEntities(menuResponse, user)
+        updateEntities(menuResponse, updatedUser)
     }
 
     private fun updateEntities(menuResponse: MenuResponse, user: User) {
@@ -72,6 +73,7 @@ class MenuCreationService(
         val list = listConverter.convert(shoppingListResponse, user.id)
         menuService.updateUserMenu(menu)
         shoppingListService.updateShoppingList(list)
+
         userService.incrementUserRegenerateRequestAndSave(user)
     }
 

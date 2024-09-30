@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class UserService(private val userRepository: UserRepository) {
-    @Scheduled(cron = "0 50 9 * * Mon")
+    @Scheduled(cron = "0 0 1 * * Mon")
     fun resetWeeklyRegenerateRequest() {
         userRepository.findAllUsersAsStream()
             .parallel()
@@ -41,6 +41,12 @@ class UserService(private val userRepository: UserRepository) {
         return isUserAllowedToRecreateMenu(user.get())
     }
 
+    fun updateUserStatus(user: User) : User {
+        return userRepository.save(user.toBuilder()
+            .isCreatingMenu(user.isCreatingMenu.not())
+            .build())
+    }
+
     fun incrementUserRegenerateRequestAndSave(user: User) {
         val builder = user.toBuilder()
         if (user.stats == null) {
@@ -56,11 +62,12 @@ class UserService(private val userRepository: UserRepository) {
                     .build(),
             )
         }
+        builder.isCreatingMenu(false)
         userRepository.save(builder.build())
     }
 
     fun isUserAllowedToRecreateMenu(user: User): Boolean {
-        if (user.limits == null || user.stats == null) {
+        if (user.limits == null || user.stats == null || user.isCreatingMenu) {
             return false
         }
         // TODO: maybe add default here as well
