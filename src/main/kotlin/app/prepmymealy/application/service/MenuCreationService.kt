@@ -1,6 +1,7 @@
 package app.prepmymealy.application.service
 
 import app.prepmymealy.application.ai.model.MenuGenerationModel
+import app.prepmymealy.application.ai.model.ShoppingListGenerationModel
 import app.prepmymealy.application.ai.response.MenuResponse
 import app.prepmymealy.application.converter.MenuResponseToMenuConverter
 import app.prepmymealy.application.converter.MenuResponseToShoppingListConverter
@@ -23,6 +24,7 @@ class MenuCreationService(
     private val menuGenerationModel: MenuGenerationModel,
     private val menuConverter: MenuResponseToMenuConverter,
     private val listConverter: MenuResponseToShoppingListConverter,
+    private val shoppingListGenerationModel: ShoppingListGenerationModel,
 ) {
     @Scheduled(cron = "0 0 3 * * Mon")
     fun createAllUserMenus() {
@@ -31,8 +33,9 @@ class MenuCreationService(
             .parallel()
             .map {
                 val menuResponse = menuGenerationModel.generateMenu(it)
-                val list = listConverter.convert(menuResponse, it.id)
                 val menu = menuConverter.convert(menuResponse, it.id)
+                val shoppingListResponse = shoppingListGenerationModel.generateShoppingList(menu)
+                val list = listConverter.convert(shoppingListResponse, it.id)
                 Tuples.of(menu, list)
             }.forEach {
                 menuService.updateUserMenu(it.t1)
@@ -64,8 +67,9 @@ class MenuCreationService(
     }
 
     private fun updateEntities(menuResponse: MenuResponse, user: User) {
-        val list = listConverter.convert(menuResponse, user.id)
         val menu = menuConverter.convert(menuResponse, user.id)
+        val shoppingListResponse = shoppingListGenerationModel.generateShoppingList(menu)
+        val list = listConverter.convert(shoppingListResponse, user.id)
         menuService.updateUserMenu(menu)
         shoppingListService.updateShoppingList(list)
         userService.incrementUserRegenerateRequestAndSave(user)

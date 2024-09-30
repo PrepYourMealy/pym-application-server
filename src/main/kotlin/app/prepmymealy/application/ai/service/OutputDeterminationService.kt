@@ -16,13 +16,23 @@ class OutputDeterminationService {
         return generateMenuSchema(settings)
     }
 
+    fun generateSchemaForShoppingList(): JSONObject {
+        val shoppingListSchema = JSONObject()
+        shoppingListSchema.put("type", "object")
+        val properties = JSONObject().put("list", generateShoppingListItemsSchema())
+        shoppingListSchema.put("properties", properties)
+        shoppingListSchema.put("required", getRequiredKeys(properties))
+        shoppingListSchema.put("additionalProperties", false)
+        return shoppingListSchema
+    }
+
     private fun generateMenuSchema(settings: Settings): JSONObject {
         val menuSchema = JSONObject()
         val definitions = JSONObject()
         definitions.put("recipe", generateRecipeSchema())
         menuSchema.put("definitions", definitions)
         menuSchema.put("type", "object")
-        val properties = JSONObject().put("list", generateShoppingListItemsSchema())
+        val properties = JSONObject()
         settings.overallWeeklySettings?.let {
             for (dayKey in DAY_KEYS) {
                 properties.put(dayKey, generateDayMenuSchema(it.overall))

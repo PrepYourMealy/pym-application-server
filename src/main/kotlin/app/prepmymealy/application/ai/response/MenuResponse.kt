@@ -15,5 +15,4 @@ data class MenuResponse
         @JsonProperty("fri") val fri: DayMenu? = null,
         @JsonProperty("sat") val sat: DayMenu? = null,
         @JsonProperty("sun") val sun: DayMenu? = null,
-        @JsonProperty("list") val list: List<ShoppingListItem>? = null,
     )

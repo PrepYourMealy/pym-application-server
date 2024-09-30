@@ -1,7 +1,9 @@
 package app.prepmymealy.application.service
 
 import app.prepmymealy.application.ai.model.MenuGenerationModel
+import app.prepmymealy.application.ai.model.ShoppingListGenerationModel
 import app.prepmymealy.application.ai.response.MenuResponse
+import app.prepmymealy.application.ai.response.ShoppingListResponse
 import app.prepmymealy.application.converter.MenuResponseToMenuConverter
 import app.prepmymealy.application.converter.MenuResponseToShoppingListConverter
 import app.prepmymealy.application.domain.menu.Menu
@@ -26,16 +28,18 @@ class MenuCreationServiceTest {
     private val menuGenerationModel: MenuGenerationModel = mock()
     private val menuConverter: MenuResponseToMenuConverter = mock()
     private val listConverter: MenuResponseToShoppingListConverter = mock()
+    private val shoppingListGenerationModel: ShoppingListGenerationModel = mock()
 
     private val user: User = mock()
     private val menuResponse: MenuResponse = mock()
+    private val shoppingListResponse: ShoppingListResponse = mock()
     private val shoppingList: ShoppingList = mock()
     private val menu: Menu = mock()
     private val settings: Settings = mock()
 
     @BeforeMethod
     fun setUp() {
-        reset(settingsService, menuService, userService, shoppingListService, menuGenerationModel, menuConverter, listConverter)
+        reset(settingsService, menuService, userService, shoppingListService, menuGenerationModel, menuConverter, listConverter, shoppingListGenerationModel, shoppingListResponse)
     }
 
     private val menuCreationService =
@@ -47,6 +51,7 @@ class MenuCreationServiceTest {
             menuGenerationModel = menuGenerationModel,
             menuConverter = menuConverter,
             listConverter = listConverter,
+            shoppingListGenerationModel = shoppingListGenerationModel,
         )
 
     @Test
@@ -107,7 +112,8 @@ class MenuCreationServiceTest {
         whenever(userService.isUserAllowedToRecreateMenu(user)).thenReturn(true)
         whenever(settingsService.getSettingsById(userId)).thenReturn(Optional.of(settings))
         whenever(menuGenerationModel.generateMenu(settings)).thenReturn(menuResponse)
-        whenever(listConverter.convert(menuResponse, userId)).thenReturn(shoppingList)
+        whenever(shoppingListGenerationModel.generateShoppingList(menu)).thenReturn(shoppingListResponse)
+        whenever(listConverter.convert(shoppingListResponse, userId)).thenReturn(shoppingList)
         whenever(menuConverter.convert(menuResponse, userId)).thenReturn(menu)
         whenever(user.id).thenReturn(userId)
 
@@ -119,7 +125,8 @@ class MenuCreationServiceTest {
         verify(userService).isUserAllowedToRecreateMenu(user)
         verify(settingsService).getSettingsById(userId)
         verify(menuGenerationModel).generateMenu(settings)
-        verify(listConverter).convert(menuResponse, userId)
+        verify(shoppingListGenerationModel).generateShoppingList(menu)
+        verify(listConverter).convert(shoppingListResponse, userId)
         verify(menuConverter).convert(menuResponse, userId)
         verify(menuService).updateUserMenu(menu)
         verify(shoppingListService).updateShoppingList(shoppingList)
@@ -131,6 +138,8 @@ class MenuCreationServiceTest {
             shoppingListService,
             settingsService,
             menuGenerationModel,
+            shoppingListResponse,
+            shoppingListGenerationModel,
             listConverter,
             menuConverter,
         )
@@ -141,7 +150,8 @@ class MenuCreationServiceTest {
         // given
         whenever(settingsService.getAllSettingsAsStream()).thenReturn(listOf(settings).stream())
         whenever(menuGenerationModel.generateMenu(settings)).thenReturn(menuResponse)
-        whenever(listConverter.convert(menuResponse, settings.id)).thenReturn(shoppingList)
+        whenever(shoppingListGenerationModel.generateShoppingList(menu)).thenReturn(shoppingListResponse)
+        whenever(listConverter.convert(shoppingListResponse, settings.id)).thenReturn(shoppingList)
         whenever(menuConverter.convert(menuResponse, settings.id)).thenReturn(menu)
 
         // when
@@ -150,7 +160,8 @@ class MenuCreationServiceTest {
         // then
         verify(settingsService).getAllSettingsAsStream()
         verify(menuGenerationModel).generateMenu(settings)
-        verify(listConverter).convert(menuResponse, settings.id)
+        verify(shoppingListGenerationModel).generateShoppingList(menu)
+        verify(listConverter).convert(shoppingListResponse, settings.id)
         verify(menuConverter).convert(menuResponse, settings.id)
         verify(menuService).updateUserMenu(menu)
         verify(shoppingListService).updateShoppingList(shoppingList)
