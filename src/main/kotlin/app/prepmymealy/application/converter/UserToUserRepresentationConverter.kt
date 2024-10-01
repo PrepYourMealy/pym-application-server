@@ -13,6 +13,7 @@ class UserToUserRepresentationConverter : Converter<User, UserRepresentation> {
     override fun convert(input: User): UserRepresentation {
         return UserRepresentation(
             id = input.id,
+            isCreatingMenu = input.isCreatingMenu,
             stats = convertStats(input.stats),
             limits = convertLimits(input.limits)
         )
